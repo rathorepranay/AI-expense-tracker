@@ -19,8 +19,10 @@
   },
   "homepage": "https://github.com/rathorepranay/AI-expense-tracker#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mysql": "^2.18.1",
     "mysql2": "^3.17.0"
   }
