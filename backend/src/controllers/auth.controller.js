@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
     }
 
     const [rows] = await db.query("SELECT * FROM users WHERE username = ?", [
-      username
+      username,
     ]);
     if (rows.length > 0) {
       return res.status(400).json({
@@ -34,15 +34,14 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const [rows] = await db.query(
-      "SELECT * FROM users WHERE username = ?",
-      [username]
-    );
+    const [rows] = await db.query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
     //username match
-    if(rows.length ===0){
-        return res.status(400).json({
-            message:"Username not found"
-        });
+    if (rows.length === 0) {
+      return res.status(400).json({
+        message: "Username not found",
+      });
     }
 
     const user = rows[0];
@@ -51,22 +50,18 @@ export const loginUser = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if(!isMatch){
-        return res.status(500).json({
-            message:"Enter correct password"
-        });
+    if (!isMatch) {
+      return res.status(500).json({
+        message: "Enter correct password",
+      });
     }
-    if(isMatch){
-    const token = jwt.sign(
-        {id : user.id},
-        "secretkey",
-        {expiresIn:"1d"}
-    );
-    res.status(200).json({message:"Login successful"});
-    };
+    if (isMatch) {
+      const token = jwt.sign({ id: user.id }, "secretkey", { expiresIn: "1d" });
+      res.status(200).json({ message: "Login successful" });
+    }
   } catch (error) {
     console.log(error);
-    
-    res.status(500).json({message:"Internal Server Error"});
+
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
