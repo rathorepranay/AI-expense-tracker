@@ -1,6 +1,7 @@
 import db from "../config/database.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 export const registerUser = async (req, res) => {
   try {
@@ -56,7 +57,10 @@ export const loginUser = async (req, res) => {
       });
     }
     if (isMatch) {
-      const token = jwt.sign({ id: user.id }, "secretkey", { expiresIn: "1d" });
+      const token = jwt.sign({ id: user.id },
+         process.env.JWT_SECRET, 
+         {expiresIn: "1d",
+      });
       res.status(200).json({ message: "Login successful" });
     }
   } catch (error) {
