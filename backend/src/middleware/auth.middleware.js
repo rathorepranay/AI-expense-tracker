@@ -14,7 +14,12 @@ export const verifyToken = (req,res,next) =>{
         const token = authHeader.split(" ")[1];
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.userID = decoded.id;
+        next();
     } catch (error) {
-        
+        return res.status(500).json({
+            message:"Invalid or expired token"
+        });
     }
 }
