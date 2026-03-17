@@ -8,8 +8,6 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    console.log("Function started");
-
     try {
       const res = await fetch("http://localhost:4000/api/auth/login", {
         method: "POST",
@@ -19,21 +17,20 @@ export default function Login() {
         body: JSON.stringify({ username, password }),
       });
 
-      console.log("Response received", res);
-
       const data = await res.json();
-      console.log("Data:", data);
 
-      if (!res.ok) {
-        alert(data.message);
+      if (!data.token) {
+        alert(data.message || "Login failed");
         return;
       }
 
-      alert("Login successful");
-
+      // ✅ Store token
       localStorage.setItem("token", data.token);
+
+      // ✅ Redirect to dashboard
+      navigate("/dashboard");
     } catch (error) {
-      console.error("ERROR:", error);
+      console.error(error);
       alert("Server error");
     }
   };
