@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ProtectedRoute from "./components/Protectedroute";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
+import EditExpense from "./pages/EditExpense";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -16,6 +17,16 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ ADD THIS */}
+        <Route
+          path="/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditExpense />
             </ProtectedRoute>
           }
         />
