@@ -3,16 +3,26 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import AddExpense from "../components/AddExpenses";
+import EditModal from "../components/EditModal";
+import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
   const [expenses, setExpenses] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 📌 Fetch expenses
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
+
+      if (!token) {
+        toast.error("Please login again");
+        navigate("/login");
+        return;
+      }
 
       const res = await fetch("http://localhost:4000/api/expenses", {
         headers: {
@@ -22,13 +32,10 @@ export default function Dashboard() {
 
       const data = await res.json();
 
-      if (res.ok) {
-        setExpenses(data);
-      } else {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
+      if (res.ok) setExpenses(data);
+      else toast.error(data.message);
+    } catch {
+      toast.error("Error fetching expenses");
     }
   };
 
@@ -36,121 +43,90 @@ export default function Dashboard() {
     fetchExpenses();
   }, []);
 
-  // 📌 Delete expense
   const handleDelete = async (id) => {
-    try {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      await fetch(`http://localhost:4000/api/expenses/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    await fetch(`http://localhost:4000/api/expenses/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-      fetchExpenses();
-    } catch (error) {
-      console.error(error);
-    }
+    toast.success("Deleted");
+    fetchExpenses();
   };
 
-  // 📌 Edit expense
-  const handleEdit = async (exp) => {
-    const newAmount = prompt("Enter new amount", exp.amount);
-    if (!newAmount) return;
-
-    try {
-      const token = localStorage.getItem("token");
-
-      await fetch(`http://localhost:4000/api/expenses/${exp.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          amount: newAmount,
-          category: exp.category,
-          date: exp.date,
-        }),
-      });
-
-      fetchExpenses();
-    } catch (error) {
-      console.error(error);
-    }
+  const handleEdit = (exp) => {
+    setSelectedExpense(exp);
+    setIsModalOpen(true);
   };
 
-  // 📊 Total calculation
   const total = expenses.reduce((acc, e) => acc + Number(e.amount), 0);
+  const latest = expenses[expenses.length - 1];
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200">
       <Sidebar />
 
-      {/* Main */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
         <Navbar />
 
-        <div className="p-6">
-          {/* Heading */}
-          <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <motion.div
+          className="p-6 space-y-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <h1 className="text-3xl font-bold">Dashboard</h1>
 
-          {/* ➕ Add Expense */}
           <AddExpense onAdd={fetchExpenses} />
 
-          {/* 📊 Stats */}
-          <div className="grid grid-cols-3 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h2 className="text-gray-500">Total Expenses</h2>
-              <p className="text-2xl font-bold">₹{total}</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h2 className="text-gray-500">Total Entries</h2>
-              <p className="text-2xl font-bold">{expenses.length}</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h2 className="text-gray-500">Latest Expense</h2>
-              <p className="text-2xl font-bold">₹{expenses[0]?.amount || 0}</p>
-            </div>
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-6">
+            {[
+              { title: "Total Expenses", value: `₹${total}` },
+              { title: "Entries", value: expenses.length },
+              { title: "Latest", value: `₹${latest?.amount || 0}` },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40"
+              >
+                <h2 className="text-gray-600">{card.title}</h2>
+                <p className="text-2xl font-bold">{card.value}</p>
+              </motion.div>
+            ))}
           </div>
 
-          {/* 📋 Table */}
-          <div className="bg-white p-6 rounded-xl shadow">
+          {/* Table */}
+          <div className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40">
             <h2 className="text-xl font-semibold mb-4">Expenses</h2>
 
-            <table className="w-full text-left">
+            <table className="w-full">
               <thead>
                 <tr className="border-b">
-                  <th className="p-2">Amount</th>
-                  <th className="p-2">Category</th>
-                  <th className="p-2">Date</th>
-                  <th className="p-2">Actions</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
                 {expenses.map((exp) => (
-                  <tr key={exp.id} className="border-b">
-                    <td className="p-2">₹{exp.amount}</td>
-                    <td className="p-2">{exp.category}</td>
-                    <td className="p-2">{exp.date}</td>
-
-                    <td className="p-2 space-x-3">
+                  <tr key={exp.id}>
+                    <td>₹{exp.amount}</td>
+                    <td>{exp.category}</td>
+                    <td>{new Date(exp.date).toLocaleDateString()}</td>
+                    <td className="space-x-2">
                       <button
-                        onClick={() => navigate(`/edit/${exp.id}`)}
-                        className="text-blue-500"
+                        onClick={() => handleEdit(exp)}
+                        className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded"
                       >
                         Edit
                       </button>
-
                       <button
                         onClick={() => handleDelete(exp.id)}
-                        className="text-red-500"
+                        className="px-3 py-1 bg-gradient-to-r from-red-400 to-pink-500 text-white rounded"
                       >
                         Delete
                       </button>
@@ -160,8 +136,15 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
       </div>
+
+      <EditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        expense={selectedExpense}
+        onUpdate={fetchExpenses}
+      />
     </div>
   );
 }

@@ -4,9 +4,15 @@ export default function Sidebar() {
       <h2 className="text-xl font-bold mb-8">💰 ExpenseAI</h2>
 
       <ul className="space-y-4">
-        <li className="cursor-pointer hover:text-purple-600">Dashboard</li>
-        <li className="cursor-pointer hover:text-purple-600">Expenses</li>
-        <li className="cursor-pointer hover:text-purple-600">Analytics</li>
+        <li className="cursor-pointer hover:text-purple-600 hover:translate-x-1 transition duration-200">
+          Dashboard
+        </li>
+        <li className="cursor-pointer hover:text-purple-600 hover:translate-x-1 transition duration-200">
+          Expenses
+        </li>
+        <li className="cursor-pointer hover:text-purple-600 hover:translate-x-1 transition duration-200">
+          Analytics
+        </li>
       </ul>
     </div>
   );
