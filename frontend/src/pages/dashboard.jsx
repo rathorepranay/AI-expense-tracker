@@ -4,8 +4,22 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import AddExpense from "../components/AddExpenses";
 import EditModal from "../components/EditModal";
+import GameStatus from "../components/GameStatus";
+import SpendingChart from "../components/SpendingChart";
+import AIInsight from "../components/AIInsight";
+import CategoryCard from "../components/CategoryCard";
+import { SkeletonCard, SkeletonTable } from "../components/SkeletonLoader";
 import { toast } from "react-hot-toast";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { getCategoryEmoji } from "../utils/categoryIcons";
+import { useConfetti } from "../components/ConfettiTrigger";
+import {
+  pageTransition,
+  staggerContainer,
+  staggerItem,
+  slideOut,
+} from "../utils/animations";
+import { getCategoryStats, isGoalAchieved } from "../utils/gamification";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -13,6 +27,9 @@ export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [goalJustAchieved, setGoalJustAchieved] = useState(false);
+  const triggerConfetti = useConfetti();
 
   const fetchExpenses = async () => {
     try {
@@ -24,6 +41,7 @@ export default function Dashboard() {
         return;
       }
 
+      setLoading(true);
       const res = await fetch("http://localhost:4000/api/expenses", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,10 +50,20 @@ export default function Dashboard() {
 
       const data = await res.json();
 
-      if (res.ok) setExpenses(data);
-      else toast.error(data.message);
+      if (res.ok) {
+        setExpenses(data);
+
+        // Check if goal just achieved
+        if (isGoalAchieved(data) && !goalJustAchieved) {
+          setGoalJustAchieved(true);
+          triggerConfetti();
+          toast.success("🎉 You achieved your weekly budget goal! 👑");
+        }
+      } else toast.error(data.message);
     } catch {
       toast.error("Error fetching expenses");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,13 +74,19 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:4000/api/expenses/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    try {
+      const res = await fetch(`http://localhost:4000/api/expenses/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    toast.success("Deleted");
-    fetchExpenses();
+      if (res.ok) {
+        toast.success("✨ Expense deleted!");
+        fetchExpenses();
+      }
+    } catch (error) {
+      toast.error("Failed to delete");
+    }
   };
 
   const handleEdit = (exp) => {
@@ -60,82 +94,196 @@ export default function Dashboard() {
     setIsModalOpen(true);
   };
 
-  const total = expenses.reduce((acc, e) => acc + Number(e.amount), 0);
-  const latest = expenses[expenses.length - 1];
+  const categoryStats = getCategoryStats(expenses);
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200">
+    <div className="flex h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200 overflow-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
 
         <motion.div
-          className="p-6 space-y-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          variants={pageTransition}
+          initial="initial"
+          animate="animate"
+          className="flex-1 overflow-y-auto p-6 space-y-6"
         >
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          {/* Header */}
+          <motion.div variants={staggerItem}>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              💰 Expense Dashboard
+            </h1>
+            <p className="text-gray-600 mt-1">Track and analyze your spending</p>
+          </motion.div>
 
-          <AddExpense onAdd={fetchExpenses} />
+          {/* Add Expense Form */}
+          <motion.div variants={staggerItem}>
+            <AddExpense onAdd={fetchExpenses} />
+          </motion.div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6">
-            {[
-              { title: "Total Expenses", value: `₹${total}` },
-              { title: "Entries", value: expenses.length },
-              { title: "Latest", value: `₹${latest?.amount || 0}` },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40"
-              >
-                <h2 className="text-gray-600">{card.title}</h2>
-                <p className="text-2xl font-bold">{card.value}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Table */}
-          <div className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40">
-            <h2 className="text-xl font-semibold mb-4">Expenses</h2>
-
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th>Amount</th>
-                  <th>Category</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {expenses.map((exp) => (
-                  <tr key={exp.id}>
-                    <td>₹{exp.amount}</td>
-                    <td>{exp.category}</td>
-                    <td>{new Date(exp.date).toLocaleDateString()}</td>
-                    <td className="space-x-2">
-                      <button
-                        onClick={() => handleEdit(exp)}
-                        className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(exp.id)}
-                        className="px-3 py-1 bg-gradient-to-r from-red-400 to-pink-500 text-white rounded"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+          {/* Gamification Status */}
+          <motion.div variants={staggerItem}>
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[1, 2, 3].map((i) => (
+                  <SkeletonCard key={i} />
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            ) : (
+              <GameStatus expenses={expenses} />
+            )}
+          </motion.div>
+
+          {/* AI Insights */}
+          <motion.div variants={staggerItem}>
+            {loading ? (
+              <SkeletonCard />
+            ) : (
+              <AIInsight expenses={expenses} />
+            )}
+          </motion.div>
+
+          {/* Charts */}
+          <motion.div variants={staggerItem}>
+            {loading ? (
+              <SkeletonCard />
+            ) : (
+              <SpendingChart expenses={expenses} />
+            )}
+          </motion.div>
+
+          {/* Category Stats */}
+          {categoryStats.length > 0 && (
+            <motion.div
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+              className="mb-6"
+            >
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
+                📊 Spending by Category
+              </h2>
+              <motion.div
+                variants={staggerContainer}
+                initial="initial"
+                animate="animate"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              >
+                {categoryStats.map((stat) => (
+                  <motion.div key={stat.category} variants={staggerItem}>
+                    <CategoryCard
+                      category={stat.category}
+                      total={stat.total}
+                      count={stat.count}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Expenses Table */}
+          {expenses.length > 0 && (
+            <motion.div
+              variants={staggerItem}
+              className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40"
+            >
+              <h2 className="text-xl font-bold mb-4 text-gray-800">
+                📋 Recent Expenses
+              </h2>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b-2 border-purple-300">
+                      <th className="text-left py-3 px-2 font-semibold text-gray-700">
+                        Date
+                      </th>
+                      <th className="text-left py-3 px-2 font-semibold text-gray-700">
+                        Category
+                      </th>
+                      <th className="text-left py-3 px-2 font-semibold text-gray-700">
+                        Amount
+                      </th>
+                      <th className="text-left py-3 px-2 font-semibold text-gray-700">
+                        Note
+                      </th>
+                      <th className="text-center py-3 px-2 font-semibold text-gray-700">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <AnimatePresence mode="popLayout">
+                      {expenses.map((exp, idx) => (
+                        <motion.tr
+                          key={exp.id}
+                          variants={slideOut}
+                          initial={{ opacity: 1, x: 0 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 300 }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="border-b border-gray-200 hover:bg-white/50 transition"
+                        >
+                          <td className="py-3 px-2 text-gray-700">
+                            {new Date(exp.date).toLocaleDateString("en-IN")}
+                          </td>
+                          <td className="py-3 px-2">
+                            <span className="flex items-center gap-2">
+                              <span className="text-lg">
+                                {getCategoryEmoji(exp.category)}
+                              </span>
+                              <span className="text-gray-700">{exp.category}</span>
+                            </span>
+                          </td>
+                          <td className="py-3 px-2 font-bold text-purple-600">
+                            ₹{Number(exp.amount).toLocaleString("en-IN")}
+                          </td>
+                          <td className="py-3 px-2 text-gray-600 truncate max-w-xs">
+                            {exp.note || "—"}
+                          </td>
+                          <td className="py-3 px-2 text-center space-x-2">
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => handleEdit(exp)}
+                              className="px-3 py-1 bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-lg hover:shadow-lg transition"
+                            >
+                              ✏️
+                            </motion.button>
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => handleDelete(exp.id)}
+                              className="px-3 py-1 bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-lg hover:shadow-lg transition"
+                            >
+                              🗑️
+                            </motion.button>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </AnimatePresence>
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Empty State */}
+          {!loading && expenses.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-12"
+            >
+              <p className="text-2xl mb-2">📝</p>
+              <p className="text-gray-600 font-medium">
+                No expenses yet. Add your first expense to get started!
+              </p>
+            </motion.div>
+          )}
         </motion.div>
       </div>
 
