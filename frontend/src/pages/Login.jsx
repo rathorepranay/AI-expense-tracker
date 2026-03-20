@@ -69,7 +69,7 @@ export default function Login() {
         variants={pageTransition}
         initial="initial"
         animate="animate"
-        className="absolute inset-0 flex items-center justify-center z-10"
+        className="absolute inset-0 flex items-center justify-center z-10 px-4 sm:px-6"
       >
         <motion.div
           variants={staggerContainer}
@@ -79,7 +79,7 @@ export default function Login() {
             isDark
               ? "bg-slate-800/60 border-slate-700/50"
               : "bg-white/20 border-white/30"
-          } backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-80 border`}
+          } backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl w-full sm:w-96 md:w-[420px] max-w-lg border`}
         >
           {/* Theme Toggle Button */}
           <motion.button
@@ -96,11 +96,11 @@ export default function Login() {
           </motion.button>
 
           {/* Title */}
-          <motion.div variants={staggerItem} className="text-center mb-8">
-            <h2 className={`${isDark ? "text-white" : "text-white"} text-4xl font-bold mb-2`}>
+          <motion.div variants={staggerItem} className="text-center mb-6 sm:mb-8">
+            <h2 className={`${isDark ? "text-white" : "text-white"} text-3xl sm:text-4xl font-bold mb-2`}>
               Welcome Back! 👋
             </h2>
-            <p className={isDark ? "text-slate-400 text-sm" : "text-gray-200 text-sm"}>
+            <p className={`${isDark ? "text-slate-400 text-xs sm:text-sm" : "text-gray-200 text-xs sm:text-sm"}`}>
               Track your expenses smarter
             </p>
           </motion.div>
@@ -118,7 +118,7 @@ export default function Login() {
                 isDark
                   ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
                   : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
-              } w-full mb-4 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium`}
+              } w-full mb-3 sm:mb-4 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium text-sm sm:text-base`}
             />
           </motion.div>
 
@@ -135,7 +135,7 @@ export default function Login() {
                 isDark
                   ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
                   : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
-              } w-full mb-6 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium`}
+              } w-full mb-6 sm:mb-8 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium text-sm sm:text-base`}
             />
           </motion.div>
 
@@ -151,7 +151,7 @@ export default function Login() {
               isDark
                 ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-2xl hover:shadow-purple-900/50"
                 : "bg-gradient-to-r from-white to-gray-100 text-purple-600"
-            } w-full font-bold py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform`}
+            } w-full font-bold py-2.5 sm:py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform text-sm sm:text-base`}
           >
             {loading ? (
               <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
@@ -165,7 +165,7 @@ export default function Login() {
           {/* Register Link */}
           <motion.div
             variants={staggerItem}
-            className={`${isDark ? "text-slate-300" : "text-white"} text-sm text-center mt-6`}
+            className={`${isDark ? "text-slate-300" : "text-white"} text-xs sm:text-sm text-center mt-6`}
           >
             Don't have an account?{" "}
             <motion.span

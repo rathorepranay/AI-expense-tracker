@@ -155,7 +155,7 @@ export default function Register() {
       variants={pageTransition}
       initial="initial"
       animate="animate"
-      className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 relative overflow-hidden"
+      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 relative overflow-hidden px-4 sm:px-6 py-6"
     >
       {/* Animated Background */}
       <motion.div
@@ -182,7 +182,7 @@ export default function Register() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="bg-white/20 backdrop-blur-lg p-10 rounded-2xl shadow-2xl w-80 border border-white/30"
+            className="bg-white/20 backdrop-blur-lg p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl w-full sm:w-96 md:w-[420px] max-w-lg border border-white/30"
           >
             <motion.div
               variants={staggerContainer}
@@ -190,11 +190,11 @@ export default function Register() {
               animate="animate"
             >
               {/* Title */}
-              <motion.div variants={staggerItem} className="text-center mb-8">
-                <h2 className="text-white text-4xl font-bold mb-2">
+              <motion.div variants={staggerItem} className="text-center mb-6 sm:mb-8">
+                <h2 className="text-white text-3xl sm:text-4xl font-bold mb-2">
                   Create Account 🚀
                 </h2>
-                <p className="text-gray-200 text-sm">
+                <p className="text-gray-200 text-xs sm:text-sm">
                   Start your expense tracking journey
                 </p>
               </motion.div>
@@ -214,7 +214,7 @@ export default function Register() {
                   onChange={(e) => setUsername(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-3 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition"
+                  className="w-full mb-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
                 />
               </motion.div>
 
@@ -227,7 +227,7 @@ export default function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-3 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition"
+                  className="w-full mb-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
                 />
               </motion.div>
 
@@ -240,7 +240,7 @@ export default function Register() {
                   onChange={(e) => setPhone(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-3 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition"
+                  className="w-full mb-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
                 />
               </motion.div>
 
@@ -253,7 +253,7 @@ export default function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-6 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition"
+                  className="w-full mb-6 sm:mb-8 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
                 />
               </motion.div>
 
@@ -265,7 +265,7 @@ export default function Register() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 {...glowEffect}
-                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition"
+                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition text-sm sm:text-base"
               >
                 {loading ? (
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
@@ -277,7 +277,7 @@ export default function Register() {
               </motion.button>
 
               {/* Login Link */}
-              <motion.div variants={staggerItem} className="text-white text-sm text-center mt-6">
+              <motion.div variants={staggerItem} className="text-white text-xs sm:text-sm text-center mt-6">
                 Already have an account?{" "}
                 <motion.span
                   onClick={() => navigate("/")}
@@ -297,7 +297,7 @@ export default function Register() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="bg-white/20 backdrop-blur-lg p-10 rounded-2xl shadow-2xl w-80 border border-white/30"
+            className="bg-white/20 backdrop-blur-lg p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl w-full sm:w-96 md:w-[420px] max-w-lg border border-white/30"
           >
             <motion.div
               variants={staggerContainer}
@@ -305,11 +305,11 @@ export default function Register() {
               animate="animate"
             >
               {/* Title */}
-              <motion.div variants={staggerItem} className="text-center mb-8">
-                <h2 className="text-white text-4xl font-bold mb-2">
+              <motion.div variants={staggerItem} className="text-center mb-6 sm:mb-8">
+                <h2 className="text-white text-3xl sm:text-4xl font-bold mb-2">
                   Verify Email ✅
                 </h2>
-                <p className="text-gray-200 text-xs">
+                <p className="text-gray-200 text-xs sm:text-sm">
                   6-digit code sent to <br />
                   <span className="font-semibold">{registrationData?.email}</span>
                 </p>
@@ -331,20 +331,20 @@ export default function Register() {
                   onKeyPress={handleKeyPress}
                   maxLength="6"
                   whileFocus={{ scale: 1.05 }}
-                  className="w-full mb-4 px-4 py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-white text-center text-4xl tracking-[1rem] font-bold bg-white/90 backdrop-blur-sm transition"
+                  className="w-full mb-4 px-3 sm:px-4 py-3 sm:py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-white text-center text-2xl sm:text-4xl tracking-[0.5rem] sm:tracking-[1rem] font-bold bg-white/90 backdrop-blur-sm transition"
                 />
               </motion.div>
 
               {/* Countdown Timer */}
               <motion.div
                 variants={staggerItem}
-                className="text-center mb-6"
+                className="text-center mb-6 sm:mb-8"
               >
-                <p className="text-white text-sm mb-2">Time remaining:</p>
+                <p className="text-white text-xs sm:text-sm mb-2">Time remaining:</p>
                 <motion.p
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ repeat: Infinity, duration: 1 }}
-                  className={`text-3xl font-bold font-mono ${getTimerColor()}`}
+                  className={`text-2xl sm:text-3xl font-bold font-mono ${getTimerColor()}`}
                 >
                   {formatTime(timeLeft)}
                 </motion.p>
@@ -352,7 +352,7 @@ export default function Register() {
                   <motion.p
                     animate={{ opacity: [1, 0.5, 1] }}
                     transition={{ repeat: Infinity, duration: 1 }}
-                    className="text-red-300 text-xs mt-2 font-semibold"
+                    className="text-red-300 text-xs sm:text-sm mt-2 font-semibold"
                   >
                     ⚠️ OTP expiring soon!
                   </motion.p>
@@ -367,7 +367,7 @@ export default function Register() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 {...glowEffect}
-                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition mb-3"
+                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition mb-3 text-sm sm:text-base"
               >
                 {loading ? (
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
@@ -386,7 +386,7 @@ export default function Register() {
                   setOtp("");
                   setRegistrationData(null);
                 }}
-                className="w-full bg-transparent text-white font-semibold py-2 rounded-lg border border-white hover:bg-white/10 transition"
+                className="w-full bg-transparent text-white font-semibold py-2 sm:py-2.5 rounded-lg border border-white hover:bg-white/10 transition text-sm sm:text-base"
               >
                 Back to Registration
               </motion.button>
