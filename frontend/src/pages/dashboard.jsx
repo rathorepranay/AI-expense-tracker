@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { getCategoryEmoji } from "../utils/categoryIcons";
 import { useConfetti } from "../components/ConfettiTrigger";
+import { useDarkMode } from "../context/DarkModeContext";
 import {
   pageTransition,
   staggerContainer,
@@ -23,6 +24,7 @@ import { getCategoryStats, isGoalAchieved } from "../utils/gamification";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { isDark } = useDarkMode();
 
   const [expenses, setExpenses] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -97,7 +99,7 @@ export default function Dashboard() {
   const categoryStats = getCategoryStats(expenses);
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200 overflow-hidden">
+    <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200"} overflow-hidden`}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">

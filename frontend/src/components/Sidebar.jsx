@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaChartLine, FaWallet, FaCog, FaQuestionCircle } from "react-icons/fa";
+import { useDarkMode } from "../context/DarkModeContext";
 
-const NavItem = ({ icon: Icon, label, isActive = false, onClick }) => {
+const NavItem = ({ icon: Icon, label, isActive = false, onClick, isDark }) => {
   return (
     <motion.button
       onClick={onClick}
@@ -10,7 +11,9 @@ const NavItem = ({ icon: Icon, label, isActive = false, onClick }) => {
       whileTap={{ scale: 0.95 }}
       className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 font-semibold transition-all duration-300 ${
         isActive
-          ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+          : isDark
+          ? "text-slate-300 hover:bg-slate-700/50"
           : "text-gray-600 hover:bg-purple-50"
       }`}
     >
@@ -28,6 +31,7 @@ const NavItem = ({ icon: Icon, label, isActive = false, onClick }) => {
 };
 
 export default function Sidebar() {
+  const { isDark } = useDarkMode();
   const [activeNav, setActiveNav] = useState("dashboard");
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -40,14 +44,18 @@ export default function Sidebar() {
     <motion.aside
       animate={{ width: isCollapsed ? 80 : 256 }}
       transition={{ duration: 0.3 }}
-      className="bg-gradient-to-b from-white via-purple-50 to-pink-50 backdrop-blur-xl border-r border-purple-200/30 shadow-lg overflow-hidden flex flex-col"
+      className={`${
+        isDark
+          ? "bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-slate-700"
+          : "bg-gradient-to-b from-white via-purple-50 to-pink-50 border-purple-200/30"
+      } backdrop-blur-xl border-r shadow-lg overflow-hidden flex flex-col`}
     >
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="p-4 border-b border-purple-200/20"
+        className={`p-4 ${isDark ? "border-slate-700" : "border-purple-200/20"} border-b`}
       >
         <div className="flex items-center justify-between">
           {!isCollapsed && (
@@ -64,8 +72,12 @@ export default function Sidebar() {
                 💰
               </motion.div>
               <div>
-                <h1 className="font-bold text-gray-900">ExpenseAI</h1>
-                <p className="text-xs text-gray-500">Tracker</p>
+                <h1 className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
+                  ExpenseAI
+                </h1>
+                <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-500"}`}>
+                  Tracker
+                </p>
               </div>
             </motion.div>
           )}
@@ -75,7 +87,9 @@ export default function Sidebar() {
             onClick={() => setIsCollapsed(!isCollapsed)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="p-2 rounded-lg hover:bg-purple-100 transition-colors"
+            className={`p-2 rounded-lg transition-colors ${
+              isDark ? "hover:bg-slate-700" : "hover:bg-purple-100"
+            }`}
           >
             <motion.span
               animate={{ rotate: isCollapsed ? 180 : 0 }}
@@ -107,6 +121,7 @@ export default function Sidebar() {
               label={isCollapsed ? "" : item.label}
               isActive={activeNav === item.id}
               onClick={() => setActiveNav(item.id)}
+              isDark={isDark}
             />
           </motion.div>
         ))}
@@ -117,7 +132,11 @@ export default function Sidebar() {
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 0.3 }}
-        className="mx-3 h-px bg-gradient-to-r from-purple-200 via-pink-200 to-transparent origin-left"
+        className={`mx-3 h-px ${
+          isDark
+            ? "bg-gradient-to-r from-slate-600 via-slate-500 to-transparent"
+            : "bg-gradient-to-r from-purple-200 via-pink-200 to-transparent"
+        } origin-left`}
       />
 
       {/* Footer */}
@@ -131,11 +150,13 @@ export default function Sidebar() {
           icon={FaCog}
           label={isCollapsed ? "" : "Settings"}
           onClick={() => {}}
+          isDark={isDark}
         />
         <NavItem
           icon={FaQuestionCircle}
           label={isCollapsed ? "" : "Help"}
           onClick={() => {}}
+          isDark={isDark}
         />
 
         {!isCollapsed && (
@@ -143,10 +164,16 @@ export default function Sidebar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-4 p-4 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-200/50"
+            className={`mt-4 p-4 rounded-lg ${
+              isDark
+                ? "bg-gradient-to-br from-slate-700 to-slate-600 border border-slate-500"
+                : "bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-200/50"
+            }`}
           >
-            <p className="text-xs font-semibold text-gray-700 mb-2">💡 Pro Tip</p>
-            <p className="text-xs text-gray-600">
+            <p className={`text-xs font-semibold ${isDark ? "text-slate-200" : "text-gray-700"} mb-2`}>
+              💡 Pro Tip
+            </p>
+            <p className={`text-xs ${isDark ? "text-slate-300" : "text-gray-600"}`}>
               Add expenses daily to build a tracking streak!
             </p>
           </motion.div>

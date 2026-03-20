@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import CanvasAnimatedBackground from "../components/CanvasAnimatedBackground";
+import { useDarkMode } from "../context/DarkModeContext";
 import { pageTransition, staggerContainer, staggerItem, glowEffect } from "../utils/animations";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { isDark, toggleDarkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -54,9 +55,14 @@ export default function Login() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Animated Canvas Background with falling money */}
-      <CanvasAnimatedBackground />
+    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Dark Background Gradient */}
+      {!isDark && <CanvasAnimatedBackground />}
+
+      {/* Dark Theme Background */}
+      {isDark && (
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+      )}
 
       {/* Login Form - Animated and positioned on top */}
       <motion.div
@@ -69,14 +75,32 @@ export default function Login() {
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="bg-white/20 backdrop-blur-lg p-10 rounded-2xl shadow-2xl w-80 border border-white/30"
+          className={`${
+            isDark
+              ? "bg-slate-800/60 border-slate-700/50"
+              : "bg-white/20 border-white/30"
+          } backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-80 border`}
         >
+          {/* Theme Toggle Button */}
+          <motion.button
+            onClick={toggleDarkMode}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className={`absolute top-4 right-4 p-2 rounded-lg transition-colors ${
+              isDark
+                ? "bg-slate-700/50 text-yellow-400 hover:bg-slate-600"
+                : "bg-white/30 text-white hover:bg-white/50"
+            }`}
+          >
+            {isDark ? "☀️" : "🌙"}
+          </motion.button>
+
           {/* Title */}
           <motion.div variants={staggerItem} className="text-center mb-8">
-            <h2 className="text-white text-4xl font-bold mb-2">
+            <h2 className={`${isDark ? "text-white" : "text-white"} text-4xl font-bold mb-2`}>
               Welcome Back! 👋
             </h2>
-            <p className="text-gray-200 text-sm">
+            <p className={isDark ? "text-slate-400 text-sm" : "text-gray-200 text-sm"}>
               Track your expenses smarter
             </p>
           </motion.div>
@@ -90,7 +114,11 @@ export default function Login() {
               onChange={(e) => setUsername(e.target.value)}
               onKeyPress={handleKeyPress}
               whileFocus={{ scale: 1.02 }}
-              className="w-full mb-4 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition placeholder-gray-400 font-medium"
+              className={`${
+                isDark
+                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
+                  : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
+              } w-full mb-4 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium`}
             />
           </motion.div>
 
@@ -103,7 +131,11 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
               whileFocus={{ scale: 1.02 }}
-              className="w-full mb-6 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition placeholder-gray-400 font-medium"
+              className={`${
+                isDark
+                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
+                  : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
+              } w-full mb-6 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium`}
             />
           </motion.div>
 
@@ -115,7 +147,11 @@ export default function Login() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             {...glowEffect}
-            className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition transform"
+            className={`${
+              isDark
+                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-2xl hover:shadow-purple-900/50"
+                : "bg-gradient-to-r from-white to-gray-100 text-purple-600"
+            } w-full font-bold py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform`}
           >
             {loading ? (
               <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
@@ -127,12 +163,17 @@ export default function Login() {
           </motion.button>
 
           {/* Register Link */}
-          <motion.div variants={staggerItem} className="text-white text-sm text-center mt-6">
+          <motion.div
+            variants={staggerItem}
+            className={`${isDark ? "text-slate-300" : "text-white"} text-sm text-center mt-6`}
+          >
             Don't have an account?{" "}
             <motion.span
               onClick={() => navigate("/register")}
               whileHover={{ scale: 1.1 }}
-              className="underline cursor-pointer font-bold hover:text-gray-100 transition inline-block"
+              className={`underline cursor-pointer font-bold transition inline-block ${
+                isDark ? "hover:text-white" : "hover:text-gray-100"
+              }`}
             >
               Register here
             </motion.span>
