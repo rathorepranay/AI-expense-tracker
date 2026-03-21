@@ -6,8 +6,7 @@ import BottomNav from "../components/BottomNav";
 import AddExpense from "../components/AddExpenses";
 import EditModal from "../components/EditModal";
 import GameStatus from "../components/GameStatus";
-import SpendingChart from "../components/SpendingChart";
-import AIInsight from "../components/AIInsight";
+import AiChatbot from "../components/AiChatbot";
 import CategoryCard from "../components/CategoryCard";
 import { SkeletonCard, SkeletonTable } from "../components/SkeletonLoader";
 import { toast } from "react-hot-toast";
@@ -21,6 +20,7 @@ import {
   slideOut,
 } from "../utils/animations";
 import { getCategoryStats } from "../utils/gamification";
+import { formatCurrency } from "../utils/currency";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -128,24 +128,6 @@ export default function Dashboard() {
             )}
           </motion.div>
 
-          {/* AI Insights */}
-          <motion.div variants={staggerItem}>
-            {loading ? (
-              <SkeletonCard />
-            ) : (
-              <AIInsight expenses={expenses} />
-            )}
-          </motion.div>
-
-          {/* Charts */}
-          <motion.div variants={staggerItem}>
-            {loading ? (
-              <SkeletonCard />
-            ) : (
-              <SpendingChart expenses={expenses} />
-            )}
-          </motion.div>
-
           {/* Category Stats */}
           {categoryStats.length > 0 && (
             <motion.div
@@ -232,7 +214,7 @@ export default function Dashboard() {
                             </span>
                           </td>
                           <td className="py-3 px-2 font-bold text-emerald-600">
-                            ₹{Number(exp.amount).toLocaleString("en-IN")}
+                            {formatCurrency(exp.amount)}
                           </td>
                           <td className="py-3 px-2 text-gray-600 truncate max-w-xs">
                             {exp.note || "—"}
@@ -286,6 +268,7 @@ export default function Dashboard() {
         expense={selectedExpense}
         onUpdate={fetchExpenses}
       />
+      <AiChatbot expenses={expenses} />
     </div>
   );
 }

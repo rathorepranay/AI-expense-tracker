@@ -8,9 +8,11 @@ import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
 import { pageTransition, staggerContainer, staggerItem } from "../utils/animations";
+import AIInsight from "../components/AIInsight";
 import SpendingChart from "../components/SpendingChart";
 import CumulativeAreaChart from "../components/CumulativeAreaChart";
 import TopExpenses from "../components/TopExpenses";
+import AiChatbot from "../components/AiChatbot";
 
 export default function Analytics() {
   const navigate = useNavigate();
@@ -90,6 +92,11 @@ export default function Analytics() {
             animate="animate"
             className="flex flex-col gap-6"
           >
+            {/* AI Insights */}
+            <motion.div variants={staggerItem} className="w-full pt-2">
+               {loading ? <SkeletonCard /> : <AIInsight expenses={expenses} />}
+            </motion.div>
+
             {/* Top Section: Area Chart & Top Expenses */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <motion.div variants={staggerItem} className="lg:col-span-2 relative">
@@ -125,6 +132,7 @@ export default function Analytics() {
           </motion.div>
         </motion.div>
       </div>
+      <AiChatbot expenses={expenses} />
     </div>
   );
 }

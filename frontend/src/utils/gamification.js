@@ -1,5 +1,7 @@
 // Gamification logic for streaks, achievements, and insights
 
+import { getCurrencySymbol, formatCurrency } from "./currency";
+
 export const getWeeklyBudget = () => {
   const saved = localStorage.getItem("weeklyBudget");
   return saved ? Number(saved) : 10000;
@@ -131,7 +133,7 @@ export const getAchievements = (expenses) => {
     achievements.push({
       id: "milestone_50k",
       title: "50k Milestone 🚀",
-      description: "Tracked ₹50,000+ in expenses",
+      description: `Tracked ${formatCurrency(50000)}+ in expenses`,
       icon: "🚀",
     });
   }

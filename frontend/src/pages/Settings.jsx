@@ -7,12 +7,14 @@ import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
 import { getWeeklyBudget } from "../utils/gamification";
+import { getCurrencySymbol, CURRENCIES } from "../utils/currency";
 import { pageTransition, staggerItem, staggerContainer } from "../utils/animations";
 
 export default function Settings() {
   const { isDark } = useDarkMode();
   const navigate = useNavigate();
   const [budget, setBudget] = useState("");
+  const [currency, setCurrency] = useState(localStorage.getItem("currency_symbol") || "₹");
 
   const handleExportCSV = async () => {
     try {
@@ -154,24 +156,53 @@ export default function Settings() {
                  Set a target for how much you want to spend each week. Your progress bars, analytics dashboard, and AI insights will dynamically adjust strictly to this goal.
                </p>
                
-               <div className="flex flex-col sm:flex-row items-end gap-4">
+               <div className="flex flex-col md:flex-row items-end gap-4">
+                 
+                 {/* Currency Switcher */}
+                 <div className="w-full md:w-48">
+                   <label className={`text-sm font-semibold mb-2 block ${isDark ? "text-slate-300" : "text-gray-700"}`}>
+                     Base Currency
+                   </label>
+                   <select 
+                     value={currency} 
+                     onChange={(e) => {
+                       setCurrency(e.target.value);
+                       localStorage.setItem("currency_symbol", e.target.value);
+                       window.location.reload();
+                     }}
+                     className={`w-full px-4 py-3 border-2 rounded-lg font-bold text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition shadow-sm ${isDark ? "bg-slate-800 border-slate-600 text-white" : "bg-white border-emerald-300 text-emerald-800"}`}
+                   >
+                     {CURRENCIES.map(c => (
+                       <option key={c.symbol} value={c.symbol}>{c.label}</option>
+                     ))}
+                   </select>
+                 </div>
+
+                 {/* Budget Input */}
                  <div className="flex-1 w-full">
                    <label className={`text-sm font-semibold mb-2 block ${isDark ? "text-slate-300" : "text-gray-700"}`}>
-                     Weekly Budget Limit (₹)
+                     Weekly Target
                    </label>
-                   <input
-                     type="number"
-                     value={budget}
-                     onChange={(e) => setBudget(e.target.value)}
-                     className={`w-full px-4 py-3 border-2 rounded-lg font-bold text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition shadow-sm ${isDark ? "bg-slate-700/50 border-slate-600 text-white placeholder-slate-400" : "bg-white/80 border-emerald-300 text-emerald-700"}`}
-                   />
+                   <div className="relative">
+                     <span className={`absolute left-4 top-1/2 -translate-y-1/2 font-bold text-xl ${isDark ? "text-slate-400" : "text-gray-500"}`}>
+                       {getCurrencySymbol()}
+                     </span>
+                     <input
+                       type="number"
+                       value={budget}
+                       onChange={(e) => setBudget(e.target.value)}
+                       className={`w-full pl-10 pr-4 py-3 border-2 rounded-lg font-bold text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition shadow-sm ${isDark ? "bg-slate-800 border-slate-600 text-white placeholder-slate-500" : "bg-white border-emerald-300 text-emerald-800"}`}
+                     />
+                   </div>
                  </div>
-                 <div className="w-full sm:w-auto mt-4 sm:mt-0">
+                 
+                 {/* Save Button */}
+                 <div className="w-full md:w-auto mt-2 md:mt-0">
                    <motion.button
                      whileHover={{ scale: 1.05 }}
                      whileTap={{ scale: 0.95 }}
                      onClick={handleSaveBudget}
-                     className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl hover:from-blue-400 hover:to-emerald-500 transition duration-300 flex items-center justify-center gap-2"
+                     className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2"
                    >
                      <span>💾</span> Save Preset
                    </motion.button>

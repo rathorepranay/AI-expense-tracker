@@ -8,6 +8,7 @@ import {
   getWeeklyBudget,
 } from "../utils/gamification";
 import { staggerContainer, staggerItem, pulseScale } from "../utils/animations";
+import { formatCurrency } from "../utils/currency";
 
 export default function GameStatus({ expenses = [] }) {
   const { isDark } = useDarkMode();
@@ -141,7 +142,7 @@ export default function GameStatus({ expenses = [] }) {
         </div>
 
         <p className={`text-xs text-center ${isDark ? "text-slate-400" : "text-gray-600"}`}>
-          Target: ₹{getWeeklyBudget().toLocaleString("en-IN")}
+          Target: {formatCurrency(getWeeklyBudget())}
         </p>
 
         {goalAchieved && (

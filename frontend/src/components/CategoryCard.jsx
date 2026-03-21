@@ -6,6 +6,7 @@ import {
   getCategoryConfig,
 } from "../utils/categoryIcons";
 import { staggerItem } from "../utils/animations";
+import { formatCurrency } from "../utils/currency";
 
 export default function CategoryCard({ category, total, count }) {
   const config = getCategoryConfig(category);
@@ -33,7 +34,7 @@ export default function CategoryCard({ category, total, count }) {
 
       <div className="flex justify-between">
         <p className="text-sm text-gray-600">
-          ₹{total.toLocaleString("en-IN")}
+          {formatCurrency(total)}
         </p>
         <p className="text-xs text-gray-500 bg-white/50 px-2 py-1 rounded-full">
           {count} {count === 1 ? "item" : "items"}

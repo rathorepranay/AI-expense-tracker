@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { getAllCategories } from "../utils/categoryIcons";
 import { glowEffect, staggerContainer, staggerItem } from "../utils/animations";
+import { getCurrencySymbol } from "../utils/currency";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -129,7 +130,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                 {/* Amount Input */}
                 <motion.div variants={staggerItem} className="mb-4">
                   <label className="text-sm font-semibold text-gray-700 mb-2 block">
-                    Amount (₹)
+                    Amount ({getCurrencySymbol()})
                   </label>
                   <motion.input
                     type="number"

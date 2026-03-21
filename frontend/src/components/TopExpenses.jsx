@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
 import { getCategoryEmoji } from "../utils/categoryIcons";
+import { formatCurrency } from "../utils/currency";
 
 export default function TopExpenses({ expenses = [] }) {
   const { isDark } = useDarkMode();
@@ -58,7 +59,7 @@ export default function TopExpenses({ expenses = [] }) {
             </div>
             <div className="text-right">
               <p className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500 text-lg">
-                ₹{Number(exp.amount).toLocaleString("en-IN")}
+                {formatCurrency(exp.amount)}
               </p>
               <p className={`text-[10px] uppercase font-bold tracking-wider ${isDark ? "text-slate-500" : "text-gray-400"}`}>
                 {new Date(exp.date).toLocaleDateString("en-IN", { month: "short", day: "numeric" })}

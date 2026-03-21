@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { getAllCategories } from "../utils/categoryIcons";
 import { useConfetti } from "./ConfettiTrigger";
 import { scaleHover } from "../utils/animations";
+import { getCurrencySymbol } from "../utils/currency";
 
 export default function AddExpense({ onAdd }) {
   const [amount, setAmount] = useState("");
@@ -93,7 +94,7 @@ export default function AddExpense({ onAdd }) {
         {/* Amount Input */}
         <div>
           <label className="text-sm font-semibold text-gray-700 mb-1 block">
-            Amount (₹)
+            Amount ({getCurrencySymbol()})
           </label>
           <motion.input
             type="number"

@@ -18,6 +18,7 @@ import {
   getCategoryStats,
 } from "../utils/gamification";
 import { getCategoryColor } from "../utils/categoryIcons";
+import { formatCurrency } from "../utils/currency";
 
 export default function SpendingChart({ expenses = [] }) {
   const { isDark } = useDarkMode();
@@ -64,7 +65,7 @@ export default function SpendingChart({ expenses = [] }) {
                 border: "2px solid #8b5cf6",
                 borderRadius: "8px",
               }}
-              formatter={(value) => `₹${value.toLocaleString("en-IN")}`}
+              formatter={(value) => formatCurrency(value)}
             />
             <Bar
               dataKey="amount"
@@ -112,7 +113,7 @@ export default function SpendingChart({ expenses = [] }) {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => `₹${value.toLocaleString("en-IN")}`}
+              formatter={(value) => formatCurrency(value)}
             />
           </PieChart>
         </ResponsiveContainer>

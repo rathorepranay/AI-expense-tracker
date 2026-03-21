@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
+import { formatCurrency } from "../utils/currency";
 
 export default function CumulativeAreaChart({ expenses = [] }) {
   const { isDark } = useDarkMode();
@@ -82,7 +83,7 @@ export default function CumulativeAreaChart({ expenses = [] }) {
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value) => `₹${value}`}
+              tickFormatter={(value) => formatCurrency(value)}
             />
             <Tooltip
               contentStyle={{
@@ -93,7 +94,7 @@ export default function CumulativeAreaChart({ expenses = [] }) {
                 color: isDark ? "#f8fafc" : "#1f2937"
               }}
               itemStyle={{ color: "#ec4899", fontWeight: "bold" }}
-              formatter={(value) => [`₹${value.toLocaleString("en-IN")}`, "Total Spent"]}
+              formatter={(value) => [formatCurrency(value), "Total Spent"]}
             />
             <Area
               type="monotone"

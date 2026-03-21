@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import BottomNav from "../components/BottomNav";
 import { useDarkMode } from "../context/DarkModeContext";
+import { formatCurrency, getCurrencySymbol } from "../utils/currency";
 import { pageTransition, staggerItem, staggerContainer } from "../utils/animations";
 
 export default function Goals() {
@@ -189,11 +190,11 @@ export default function Goals() {
                     <div className="flex justify-between items-end mb-6">
                       <div>
                         <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-500"}`}>Current</p>
-                        <p className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}>₹{Number(goal.current_amount).toLocaleString('en-IN')}</p>
+                        <p className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}>{formatCurrency(goal.current_amount)}</p>
                       </div>
                       <div className="text-right">
                         <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-500"}`}>Target</p>
-                        <p className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}>₹{Number(goal.target_amount).toLocaleString('en-IN')}</p>
+                        <p className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}>{formatCurrency(goal.target_amount)}</p>
                       </div>
                     </div>
                     
@@ -238,7 +239,7 @@ export default function Goals() {
                   <input required type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Dream Vacation" className={`w-full px-4 py-2 rounded-lg border ${isDark ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' : 'bg-white border-gray-300'} focus:ring-2 focus:ring-emerald-500 outline-none`} />
                 </div>
                 <div>
-                  <label className={`block text-sm font-semibold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>Target Amount (₹)</label>
+                  <label className={`block text-sm font-semibold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>Target Amount ({getCurrencySymbol()})</label>
                   <input required type="number" min="1" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="50000" className={`w-full px-4 py-2 rounded-lg border ${isDark ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' : 'bg-white border-gray-300'} focus:ring-2 focus:ring-emerald-500 outline-none`} />
                 </div>
                 <div>
