@@ -12,13 +12,15 @@ export default function Navbar() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    setUsername("User");
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername || "User");
   }, []);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
       toast.success("👋 See you soon!");
 
       await new Promise(resolve => setTimeout(resolve, 500));

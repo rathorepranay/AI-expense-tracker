@@ -135,9 +135,8 @@ export default function Register() {
       if (response.ok) {
         // Trigger confetti
         triggerConfetti();
-        toast.success("🎉 Welcome to ExpenseAI! 🚀");
-        localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+        toast.success("🎉 Registration successful! Please log in. 🚀");
+        navigate("/");
       } else {
         toast.error(data.message || "OTP verification failed");
       }
