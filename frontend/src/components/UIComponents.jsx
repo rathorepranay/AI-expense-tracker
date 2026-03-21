@@ -19,12 +19,12 @@ export const PremiumButton = ({
 
   const variantClasses = {
     primary:
-      "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg",
+      "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-lg",
     secondary:
-      "bg-white border-2 border-purple-300 text-gray-700 hover:bg-purple-50",
+      "bg-white border-2 border-emerald-300 text-gray-700 hover:bg-emerald-50",
     danger:
-      "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:shadow-lg",
-    ghost: "text-purple-600 hover:bg-purple-50",
+      "bg-gradient-to-r from-red-500 to-teal-500 text-white hover:shadow-lg",
+    ghost: "text-emerald-600 hover:bg-emerald-50",
   };
 
   const sizeClasses = {
@@ -69,9 +69,9 @@ export const PremiumInput = ({
 }) => {
   const variantClasses = {
     default:
-      "border-2 border-purple-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200",
+      "border-2 border-emerald-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200",
     alternative:
-      "border-b-2 border-purple-300 focus:border-b-purple-500 bg-transparent",
+      "border-b-2 border-emerald-300 focus:border-b-emerald-500 bg-transparent",
   };
 
   return (
@@ -125,7 +125,7 @@ export const PremiumCard = ({
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className={`${
         gradient
-          ? "bg-gradient-to-br from-white via-purple-50 to-pink-50"
+          ? "bg-gradient-to-br from-white via-emerald-50 to-teal-50"
           : "bg-white"
       } backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white/40 ${className}`}
     >
@@ -145,7 +145,7 @@ export const PremiumBadge = ({
   animated = false,
 }) => {
   const variantClasses = {
-    primary: "bg-purple-100 text-purple-700",
+    primary: "bg-emerald-100 text-emerald-700",
     success: "bg-green-100 text-green-700",
     warning: "bg-amber-100 text-amber-700",
     danger: "bg-red-100 text-red-700",

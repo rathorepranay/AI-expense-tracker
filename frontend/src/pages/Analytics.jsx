@@ -58,7 +58,7 @@ export default function Analytics() {
       className={`flex h-screen ${
         isDark
           ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
-          : "bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200"
+          : "bg-gradient-to-br from-emerald-200 via-teal-100 to-blue-200"
       } overflow-hidden`}
     >
       <Sidebar />
@@ -74,7 +74,7 @@ export default function Analytics() {
         >
           {/* Header */}
           <motion.div variants={staggerItem}>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
               📈 Analytics Overview
             </h1>
             <p className={`mt-1 ${isDark ? "text-slate-400" : "text-gray-600"}`}>

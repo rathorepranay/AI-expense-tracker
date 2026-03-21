@@ -117,7 +117,7 @@ export default function Login() {
               whileFocus={{ scale: 1.02 }}
               className={`${
                 isDark
-                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
+                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-emerald-400"
                   : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
               } w-full mb-3 sm:mb-4 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium text-sm sm:text-base`}
             />
@@ -134,7 +134,7 @@ export default function Login() {
               whileFocus={{ scale: 1.02 }}
               className={`${
                 isDark
-                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-purple-400"
+                  ? "bg-slate-700/50 text-white placeholder-slate-400 border-slate-600 focus:ring-emerald-400"
                   : "bg-white/90 text-gray-900 placeholder-gray-400 border-white focus:ring-white"
               } w-full mb-6 sm:mb-8 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 border-2 backdrop-blur-sm transition font-medium text-sm sm:text-base`}
             />
@@ -150,8 +150,8 @@ export default function Login() {
             {...glowEffect}
             className={`${
               isDark
-                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-2xl hover:shadow-purple-900/50"
-                : "bg-gradient-to-r from-white to-gray-100 text-purple-600"
+                ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:shadow-2xl hover:shadow-emerald-900/50"
+                : "bg-gradient-to-r from-white to-gray-100 text-emerald-600"
             } w-full font-bold py-2.5 sm:py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform text-sm sm:text-base`}
           >
             {loading ? (

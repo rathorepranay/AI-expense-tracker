@@ -187,7 +187,7 @@ export const getSpendingTip = (expenses, dailyAverage = null) => {
 
   return {
     text: "✨ Keep tracking consistently to see better insights!",
-    color: "text-purple-600",
+    color: "text-emerald-600",
   };
 };
 

@@ -13,10 +13,10 @@ const NavItem = ({ icon: Icon, label, isActive = false, onClick, isDark }) => {
       whileTap={{ scale: 0.95 }}
       className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 font-semibold transition-all duration-300 ${
         isActive
-          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+          ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg"
           : isDark
           ? "text-slate-300 hover:bg-slate-700/50"
-          : "text-gray-600 hover:bg-purple-50"
+          : "text-gray-600 hover:bg-emerald-50"
       }`}
     >
       <Icon className="text-lg" />
@@ -53,7 +53,7 @@ export default function Sidebar() {
       className={`${
         isDark
           ? "bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-slate-700"
-          : "bg-gradient-to-b from-white via-purple-50 to-pink-50 border-purple-200/30"
+          : "bg-gradient-to-b from-white via-emerald-50 to-teal-50 border-emerald-200/30"
       } backdrop-blur-xl border-r shadow-lg overflow-hidden flex flex-col`}
     >
       {/* Header */}
@@ -61,7 +61,7 @@ export default function Sidebar() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className={`p-4 ${isDark ? "border-slate-700" : "border-purple-200/20"} border-b`}
+        className={`p-4 ${isDark ? "border-slate-700" : "border-emerald-200/20"} border-b`}
       >
         <div className="flex items-center justify-between">
           {!isCollapsed && (
@@ -88,7 +88,7 @@ export default function Sidebar() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={`p-2 rounded-lg transition-colors ${
-              isDark ? "hover:bg-slate-700" : "hover:bg-purple-100"
+              isDark ? "hover:bg-slate-700" : "hover:bg-emerald-100"
             }`}
           >
             <motion.span
@@ -135,7 +135,7 @@ export default function Sidebar() {
         className={`mx-3 h-px ${
           isDark
             ? "bg-gradient-to-r from-slate-600 via-slate-500 to-transparent"
-            : "bg-gradient-to-r from-purple-200 via-pink-200 to-transparent"
+            : "bg-gradient-to-r from-emerald-200 via-teal-200 to-transparent"
         } origin-left`}
       />
 
@@ -168,7 +168,7 @@ export default function Sidebar() {
             className={`mt-4 p-4 rounded-lg ${
               isDark
                 ? "bg-gradient-to-br from-slate-700 to-slate-600 border border-slate-500"
-                : "bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-200/50"
+                : "bg-gradient-to-br from-emerald-100 to-teal-100 border border-emerald-200/50"
             }`}
           >
             <p className={`text-xs font-semibold ${isDark ? "text-slate-200" : "text-gray-700"} mb-2`}>

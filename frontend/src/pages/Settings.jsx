@@ -29,7 +29,7 @@ export default function Settings() {
   };
 
   return (
-    <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200"} overflow-hidden`}>
+    <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-emerald-200 via-teal-100 to-blue-200"} overflow-hidden`}>
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
@@ -42,7 +42,7 @@ export default function Settings() {
         >
           {/* Header */}
           <motion.div variants={staggerItem}>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
               ⚙️ Settings
             </h1>
             <p className={`mt-1 ${isDark ? "text-slate-400" : "text-gray-600"}`}>
@@ -69,7 +69,7 @@ export default function Settings() {
                      type="number"
                      value={budget}
                      onChange={(e) => setBudget(e.target.value)}
-                     className={`w-full px-4 py-3 border-2 rounded-lg font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition shadow-sm ${isDark ? "bg-slate-700/50 border-slate-600 text-white placeholder-slate-400" : "bg-white/80 border-purple-300 text-purple-700"}`}
+                     className={`w-full px-4 py-3 border-2 rounded-lg font-bold text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition shadow-sm ${isDark ? "bg-slate-700/50 border-slate-600 text-white placeholder-slate-400" : "bg-white/80 border-emerald-300 text-emerald-700"}`}
                    />
                  </div>
                  <div className="w-full sm:w-auto mt-4 sm:mt-0">
@@ -77,7 +77,7 @@ export default function Settings() {
                      whileHover={{ scale: 1.05 }}
                      whileTap={{ scale: 0.95 }}
                      onClick={handleSaveBudget}
-                     className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl hover:from-blue-400 hover:to-purple-500 transition duration-300 flex items-center justify-center gap-2"
+                     className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl hover:from-blue-400 hover:to-emerald-500 transition duration-300 flex items-center justify-center gap-2"
                    >
                      <span>💾</span> Save Preset
                    </motion.button>

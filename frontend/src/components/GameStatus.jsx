@@ -81,7 +81,7 @@ export default function GameStatus({ expenses = [] }) {
         className={`${
           isDark
             ? "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600"
-            : "bg-gradient-to-br from-blue-100 to-purple-100 border-blue-200/50"
+            : "bg-gradient-to-br from-blue-100 to-emerald-100 border-blue-200/50"
         } backdrop-blur-lg p-6 rounded-2xl shadow-lg border`}
       >
         <p className={`${isDark ? "text-slate-300" : "text-gray-700"} text-sm font-semibold mb-4`}>
@@ -162,7 +162,7 @@ export default function GameStatus({ expenses = [] }) {
         className={`${
           isDark
             ? "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600"
-            : "bg-gradient-to-br from-yellow-100 to-pink-100 border-yellow-200/50"
+            : "bg-gradient-to-br from-yellow-100 to-teal-100 border-yellow-200/50"
         } backdrop-blur-lg p-6 rounded-2xl shadow-lg border`}
       >
         <p className={`${isDark ? "text-slate-300" : "text-gray-700"} text-sm font-semibold mb-3`}>Achievements</p>

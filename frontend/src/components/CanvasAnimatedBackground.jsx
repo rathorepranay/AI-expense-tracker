@@ -98,10 +98,10 @@ export default function CanvasAnimatedBackground() {
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
       gradient.addColorStop(
         0,
-        "rgba(102, 126, 234, 0.95)"
-      ); // Purple
-      gradient.addColorStop(0.5, "rgba(240, 147, 251, 0.95)"); // Pink
-      gradient.addColorStop(1, "rgba(79, 172, 254, 0.95)"); // Blue
+        "rgba(16, 185, 129, 0.95)"
+      ); // Emerald
+      gradient.addColorStop(0.5, "rgba(20, 184, 166, 0.95)"); // Teal
+      gradient.addColorStop(1, "rgba(6, 95, 70, 0.95)"); // Dark Emerald
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -157,7 +157,7 @@ export default function CanvasAnimatedBackground() {
       className="fixed inset-0 w-full h-full blur-sm"
       style={{
         background:
-          "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%)",
+          "linear-gradient(135deg, #10b981 0%, #059669 25%, #14b8a6 50%, #0d9488 75%, #10b981 100%)",
       }}
     />
   );

@@ -39,7 +39,7 @@ export default function Navbar() {
       className={`${
         isDark
           ? "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-700"
-          : "bg-gradient-to-r from-purple-50 via-white to-pink-50 border-purple-200/30"
+          : "bg-gradient-to-r from-emerald-50 via-white to-teal-50 border-emerald-200/30"
       } backdrop-blur-xl border-b shadow-sm`}
     >
       <div className="px-6 py-4 flex justify-between items-center">
@@ -71,7 +71,7 @@ export default function Navbar() {
           {/* Greeting */}
           <div className="hidden sm:block">
             <p className={`text-sm ${isDark ? "text-slate-300" : "text-gray-600"}`}>
-              Welcome back, <span className="font-semibold text-purple-600">{username}</span>
+              Welcome back, <span className="font-semibold text-emerald-600">{username}</span>
             </p>
             <p className={`text-xs ${isDark ? "text-slate-500" : "text-gray-400"}`}>
               Track your daily expenses
@@ -79,7 +79,7 @@ export default function Navbar() {
           </div>
 
           {/* Divider */}
-          <div className={`hidden sm:block w-px h-8 ${isDark ? "bg-gradient-to-b from-slate-600 to-slate-700" : "bg-gradient-to-b from-purple-200 to-pink-200"}`} />
+          <div className={`hidden sm:block w-px h-8 ${isDark ? "bg-gradient-to-b from-slate-600 to-slate-700" : "bg-gradient-to-b from-emerald-200 to-teal-200"}`} />
 
           {/* Dark Mode Toggle */}
           <motion.button
@@ -89,7 +89,7 @@ export default function Navbar() {
             className={`px-3 py-2 rounded-lg font-semibold text-sm transition-colors ${
               isDark
                 ? "bg-slate-700/50 text-yellow-400 hover:bg-slate-600"
-                : "bg-purple-100 text-purple-600 hover:bg-purple-200"
+                : "bg-emerald-100 text-emerald-600 hover:bg-emerald-200"
             }`}
           >
             {isDark ? "☀️ Light" : "🌙 Dark"}
@@ -103,8 +103,8 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
               isDark
-                ? "bg-gradient-to-r from-red-900/70 to-pink-900/70 text-red-200 hover:from-red-800 hover:to-pink-800"
-                : "bg-gradient-to-r from-red-500 to-pink-500 text-white"
+                ? "bg-gradient-to-r from-red-900/70 to-teal-900/70 text-red-200 hover:from-red-800 hover:to-teal-800"
+                : "bg-gradient-to-r from-red-500 to-teal-500 text-white"
             }`}
           >
             <span className="text-white flex items-center gap-2">
@@ -130,7 +130,7 @@ export default function Navbar() {
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
-        className={`h-0.5 ${isDark ? "bg-gradient-to-r from-purple-600 via-pink-600 to-transparent" : "bg-gradient-to-r from-purple-400 via-pink-400 to-transparent"} origin-left`}
+        className={`h-0.5 ${isDark ? "bg-gradient-to-r from-emerald-600 via-teal-600 to-transparent" : "bg-gradient-to-r from-emerald-400 via-teal-400 to-transparent"} origin-left`}
       />
     </motion.nav>
   );

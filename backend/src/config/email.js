@@ -49,11 +49,11 @@ export async function sendOTP(email, otp) {
       text: `Your verification code is: ${otp}\n\nThis code will expire in 10 minutes.\n\nDo not share this code with anyone.`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-          <h2 style="color: #6a1b9a; text-align: center;">ExpenseAI Verification</h2>
+          <h2 style="color: #059669; text-align: center;">SpendSmart Verification</h2>
           <p>Hello,</p>
           <p>Your verification code is:</p>
-          <div style="background-color: #f3e5f5; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0;">
-            <h1 style="color: #4a148c; letter-spacing: 5px; margin: 0;">${otp}</h1>
+          <div style="background-color: #ecfdf5; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0;">
+            <h1 style="color: #065f46; letter-spacing: 5px; margin: 0;">${otp}</h1>
           </div>
           <p style="color: #e53935; font-size: 14px;">This code will expire in 10 minutes.</p>
           <p>If you didn't request this, please ignore this email.</p>

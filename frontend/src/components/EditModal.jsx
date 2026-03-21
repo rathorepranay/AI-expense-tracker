@@ -109,7 +109,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
           >
             <motion.div
               variants={modalVariants}
-              className="bg-gradient-to-br from-white via-purple-50 to-pink-50 backdrop-blur-xl p-8 rounded-2xl w-full max-w-md shadow-2xl border border-white/40"
+              className="bg-gradient-to-br from-white via-emerald-50 to-teal-50 backdrop-blur-xl p-8 rounded-2xl w-full max-w-md shadow-2xl border border-white/40"
             >
               <motion.div
                 variants={staggerContainer}
@@ -118,7 +118,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
               >
                 {/* Header */}
                 <motion.div variants={staggerItem} className="mb-6">
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                     ✏️ Edit Expense
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">
@@ -136,7 +136,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     whileFocus={{ scale: 1.02 }}
-                    className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+                    className="w-full px-4 py-3 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition"
                   />
                 </motion.div>
 
@@ -149,7 +149,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
+                    className="w-full px-4 py-3 border-2 border-emerald-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
                   >
                     <span>{category || "Select Category"}</span>
                     <motion.span
@@ -167,7 +167,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-purple-300 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto"
+                        className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-emerald-300 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto"
                       >
                         {categories.map((cat, idx) => (
                           <motion.button
@@ -198,7 +198,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     whileFocus={{ scale: 1.02 }}
-                    className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+                    className="w-full px-4 py-3 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition"
                   />
                 </motion.div>
 
@@ -212,7 +212,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Add a note..."
                     whileFocus={{ scale: 1.02 }}
-                    className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition resize-none"
+                    className="w-full px-4 py-3 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition resize-none"
                     rows="2"
                   />
                 </motion.div>
@@ -238,7 +238,7 @@ export default function EditModal({ isOpen, onClose, expense, onUpdate }) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     {...glowEffect}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition"
+                    className="flex-1 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition"
                   >
                     {loading ? (
                       <motion.span

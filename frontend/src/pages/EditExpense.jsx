@@ -93,7 +93,7 @@ export default function EditExpense() {
 
         <button
           onClick={handleUpdate}
-          className="w-full bg-purple-600 text-white py-2 rounded"
+          className="w-full bg-emerald-600 text-white py-2 rounded"
         >
           Update Expense
         </button>

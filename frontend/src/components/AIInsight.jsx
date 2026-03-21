@@ -13,7 +13,7 @@ export default function AIInsight({ expenses = [] }) {
       variants={staggerItem}
       initial="initial"
       animate="animate"
-      className="bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-purple-200/50 mb-6"
+      className="bg-gradient-to-r from-emerald-100 via-emerald-100 to-teal-100 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-emerald-200/50 mb-6"
     >
       <div className="flex items-start gap-4">
         {/* Icon */}

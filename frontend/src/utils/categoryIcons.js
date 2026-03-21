@@ -38,7 +38,7 @@ export const categoryConfig = {
     label: "Entertainment",
     icon: FaFilm,
     color: "#8b5cf6",
-    bgColor: "bg-purple-100",
+    bgColor: "bg-emerald-100",
     emoji: "🎬",
   },
   fitness: {
@@ -66,14 +66,14 @@ export const categoryConfig = {
     label: "Medical",
     icon: FaHeart,
     color: "#ec4899",
-    bgColor: "bg-pink-100",
+    bgColor: "bg-teal-100",
     emoji: "🏥",
   },
   education: {
     label: "Education",
     icon: FaBook,
     color: "#6366f1",
-    bgColor: "bg-indigo-100",
+    bgColor: "bg-emerald-100",
     emoji: "📚",
   },
   utilities: {
@@ -87,14 +87,14 @@ export const categoryConfig = {
     label: "Gaming",
     icon: FaGamepad,
     color: "#8b5cf6",
-    bgColor: "bg-purple-100",
+    bgColor: "bg-emerald-100",
     emoji: "🎮",
   },
   music: {
     label: "Music & Audio",
     icon: FaMusic,
     color: "#ec4899",
-    bgColor: "bg-pink-100",
+    bgColor: "bg-teal-100",
     emoji: "🎵",
   },
   sports: {

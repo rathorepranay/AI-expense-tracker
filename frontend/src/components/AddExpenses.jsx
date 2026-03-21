@@ -81,7 +81,7 @@ export default function AddExpense({ onAdd }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40"
+      className="bg-gradient-to-br from-blue-100 via-emerald-100 to-teal-100 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/40"
     >
       <div className="flex items-center gap-2 mb-4">
         <span className="text-2xl">➕</span>
@@ -101,7 +101,7 @@ export default function AddExpense({ onAdd }) {
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter amount"
             whileFocus={{ scale: 1.02 }}
-            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+            className="w-full px-4 py-2 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition"
           />
         </div>
 
@@ -115,7 +115,7 @@ export default function AddExpense({ onAdd }) {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             whileFocus={{ scale: 1.02 }}
-            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+            className="w-full px-4 py-2 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition"
           />
         </div>
 
@@ -128,7 +128,7 @@ export default function AddExpense({ onAdd }) {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
+            className="w-full px-4 py-2 border-2 border-emerald-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
           >
             <span>{category || "Select Category"}</span>
             <motion.span
@@ -146,7 +146,7 @@ export default function AddExpense({ onAdd }) {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-purple-300 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto"
+                className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-emerald-300 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto"
               >
                 {categories.map((cat, idx) => (
                   <motion.button
@@ -178,7 +178,7 @@ export default function AddExpense({ onAdd }) {
             onChange={(e) => setNote(e.target.value)}
             placeholder="Add a brief note..."
             whileFocus={{ scale: 1.02 }}
-            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+            className="w-full px-4 py-2 border-2 border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/80 backdrop-blur-sm transition"
           />
         </div>
       </div>
@@ -198,7 +198,7 @@ export default function AddExpense({ onAdd }) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleCategorySelect(cat)}
-                className="px-3 py-1 bg-white/70 rounded-full text-sm font-medium text-gray-700 border border-purple-300 hover:bg-purple-100 shadow-sm transition"
+                className="px-3 py-1 bg-white/70 rounded-full text-sm font-medium text-gray-700 border border-emerald-300 hover:bg-emerald-100 shadow-sm transition"
               >
                 {cat.emoji} {cat.label}
               </motion.button>
@@ -212,7 +212,7 @@ export default function AddExpense({ onAdd }) {
         onClick={handleSubmit}
         disabled={loading}
         {...scaleHover}
-        className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-bold rounded-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform"
+        className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 via-teal-500 to-red-500 text-white font-bold rounded-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition transform"
       >
         {loading ? (
           <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>

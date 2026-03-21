@@ -160,7 +160,7 @@ export default function Register() {
       variants={pageTransition}
       initial="initial"
       animate="animate"
-      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 relative overflow-hidden px-4 sm:px-6 py-6"
+      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-emerald-500 via-emerald-500 to-teal-500 relative overflow-hidden px-4 sm:px-6 py-6"
     >
       {/* Animated Background */}
       <motion.div
@@ -273,7 +273,7 @@ export default function Register() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 {...glowEffect}
-                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition text-sm sm:text-base"
+                className="w-full bg-gradient-to-r from-white to-gray-100 text-emerald-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition text-sm sm:text-base"
               >
                 {loading ? (
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
@@ -375,7 +375,7 @@ export default function Register() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 {...glowEffect}
-                className="w-full bg-gradient-to-r from-white to-gray-100 text-purple-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition mb-3 text-sm sm:text-base"
+                className="w-full bg-gradient-to-r from-white to-gray-100 text-emerald-600 font-bold py-2.5 sm:py-3 rounded-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition mb-3 text-sm sm:text-base"
               >
                 {loading ? (
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>

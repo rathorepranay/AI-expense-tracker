@@ -88,7 +88,7 @@ export default function Dashboard() {
   const categoryStats = getCategoryStats(expenses);
 
   return (
-    <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200"} overflow-hidden`}>
+    <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-emerald-200 via-teal-100 to-blue-200"} overflow-hidden`}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -102,7 +102,7 @@ export default function Dashboard() {
         >
           {/* Header */}
           <motion.div variants={staggerItem}>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               💰 Expense Dashboard
             </h1>
             <p className="text-gray-600 mt-1">Track and analyze your spending</p>
@@ -187,7 +187,7 @@ export default function Dashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b-2 border-purple-300">
+                    <tr className="border-b-2 border-emerald-300">
                       <th className="text-left py-3 px-2 font-semibold text-gray-700">
                         Date
                       </th>
@@ -229,7 +229,7 @@ export default function Dashboard() {
                               <span className="text-gray-700">{exp.category}</span>
                             </span>
                           </td>
-                          <td className="py-3 px-2 font-bold text-purple-600">
+                          <td className="py-3 px-2 font-bold text-emerald-600">
                             ₹{Number(exp.amount).toLocaleString("en-IN")}
                           </td>
                           <td className="py-3 px-2 text-gray-600 truncate max-w-xs">
@@ -240,7 +240,7 @@ export default function Dashboard() {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleEdit(exp)}
-                              className="px-3 py-1 bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-lg hover:shadow-lg transition"
+                              className="px-3 py-1 bg-gradient-to-r from-blue-400 to-emerald-500 text-white rounded-lg hover:shadow-lg transition"
                             >
                               ✏️
                             </motion.button>
@@ -248,7 +248,7 @@ export default function Dashboard() {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleDelete(exp.id)}
-                              className="px-3 py-1 bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-lg hover:shadow-lg transition"
+                              className="px-3 py-1 bg-gradient-to-r from-red-400 to-teal-500 text-white rounded-lg hover:shadow-lg transition"
                             >
                               🗑️
                             </motion.button>
