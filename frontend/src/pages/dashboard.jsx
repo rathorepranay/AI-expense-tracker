@@ -12,7 +12,6 @@ import { SkeletonCard, SkeletonTable } from "../components/SkeletonLoader";
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { getCategoryEmoji } from "../utils/categoryIcons";
-import { useConfetti } from "../components/ConfettiTrigger";
 import { useDarkMode } from "../context/DarkModeContext";
 import {
   pageTransition,
@@ -20,7 +19,7 @@ import {
   staggerItem,
   slideOut,
 } from "../utils/animations";
-import { getCategoryStats, isGoalAchieved } from "../utils/gamification";
+import { getCategoryStats } from "../utils/gamification";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -30,9 +29,6 @@ export default function Dashboard() {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [goalJustAchieved, setGoalJustAchieved] = useState(false);
-  const triggerConfetti = useConfetti();
-
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -54,14 +50,6 @@ export default function Dashboard() {
 
       if (res.ok) {
         setExpenses(data);
-
-        // Only celebrate budget achievement at the end of the week (Saturday)
-        const isEndOfWeek = new Date().getDay() === 6; // 0=Sun, 6=Sat
-        if (isGoalAchieved(data) && !goalJustAchieved && isEndOfWeek) {
-          setGoalJustAchieved(true);
-          triggerConfetti();
-          toast.success("🎉 You survived the week under budget! 👑");
-        }
       } else toast.error(data.message);
     } catch {
       toast.error("Error fetching expenses");
