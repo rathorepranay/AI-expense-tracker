@@ -258,11 +258,34 @@ export default function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
+                  className={`w-full mb-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none bg-white/90 backdrop-blur-sm transition text-sm sm:text-base ${
+                    password.length === 0
+                      ? "focus:ring-2 focus:ring-white"
+                      : /^(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(password)
+                      ? "ring-4 ring-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]"
+                      : "ring-4 ring-red-500 shadow-[0_0_15px_rgba(239,68,68,0.6)]"
+                  }`}
                 />
-                <p className="text-white/80 text-xs mb-6 sm:mb-8 ml-1">
-                  * Must be at least 8 chars, 1 number, & 1 symbol
-                </p>
+                <AnimatePresence>
+                  {password.length > 0 && (
+                     <motion.div
+                       initial={{ opacity: 0, height: 0 }}
+                       animate={{ opacity: 1, height: "auto" }}
+                       className={`text-xs mb-6 sm:mb-8 p-2 rounded border font-semibold flex items-center gap-2 ${
+                         /^(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(password)
+                           ? "bg-green-500/20 border-green-400 text-green-100"
+                           : "bg-red-500/20 border-red-400 text-red-100"
+                       }`}
+                     >
+                       {/^(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(password) ? "✅ Strong Password" : "❌ Need 8+ chars, 1 number, 1 symbol"}
+                     </motion.div>
+                  )}
+                  {password.length === 0 && (
+                     <p className="text-white/80 text-xs mb-6 sm:mb-8 ml-1">
+                       * Must be at least 8 chars, 1 number, & 1 symbol
+                     </p>
+                  )}
+                </AnimatePresence>
               </motion.div>
 
               {/* Register Button */}

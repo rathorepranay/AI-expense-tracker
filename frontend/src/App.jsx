@@ -7,6 +7,7 @@ import Analytics from "./pages/Analytics";
 import Goals from "./pages/Goals";
 import Settings from "./pages/Settings";
 import EditExpense from "./pages/EditExpense";
+import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -61,6 +62,9 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 404 Catch All Route */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </DarkModeProvider>

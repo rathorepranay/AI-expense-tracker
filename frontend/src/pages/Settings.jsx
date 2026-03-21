@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import BottomNav from "../components/BottomNav";
 import { toast } from "react-hot-toast";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
 import { getWeeklyBudget } from "../utils/gamification";
 import { getCurrencySymbol, CURRENCIES } from "../utils/currency";
@@ -15,6 +15,9 @@ export default function Settings() {
   const navigate = useNavigate();
   const [budget, setBudget] = useState("");
   const [currency, setCurrency] = useState(localStorage.getItem("currency_symbol") || "₹");
+  const [showClearHistoryModal, setShowClearHistoryModal] = useState(false);
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+  const [deleteAccountInput, setDeleteAccountInput] = useState("");
 
   const handleExportCSV = async () => {
     try {
@@ -59,9 +62,7 @@ export default function Settings() {
     }
   };
 
-  const handleClearHistory = async () => {
-    if (!window.confirm("Are you sure you want to delete ALL your expense history? This cannot be undone.")) return;
-    
+  const executeClearHistory = async () => {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch("http://localhost:4000/api/expenses/clear", {
@@ -71,6 +72,7 @@ export default function Settings() {
       
       if (res.ok) {
         toast.success("🗑️ All history cleared!");
+        setShowClearHistoryModal(false);
       } else {
         toast.error("Failed to clear history");
       }
@@ -79,10 +81,9 @@ export default function Settings() {
     }
   };
 
-  const handleDeleteAccount = async () => {
-    const confirmName = window.prompt("Type 'DELETE' to permanently delete your account. This will wipe all data.");
-    if (confirmName !== 'DELETE') {
-      toast.error("Account deletion cancelled");
+  const executeDeleteAccount = async () => {
+    if (deleteAccountInput !== 'DELETE') {
+      toast.error("Type DELETE exactly as shown");
       return;
     }
     
@@ -234,7 +235,7 @@ export default function Settings() {
                      <h4 className={`font-semibold ${isDark ? "text-slate-200" : "text-gray-800"}`}>Clear History</h4>
                      <p className={`text-sm ${isDark ? "text-slate-400" : "text-gray-500"}`}>Delete all expenses but keep your account</p>
                    </div>
-                   <button onClick={handleClearHistory} className="px-5 py-2.5 bg-yellow-600 hover:bg-yellow-500 text-white text-sm font-semibold rounded-lg shadow transition">
+                   <button onClick={() => setShowClearHistoryModal(true)} className="px-5 py-2.5 bg-yellow-600 hover:bg-yellow-500 text-white text-sm font-semibold rounded-lg shadow transition">
                      Clear History
                    </button>
                  </div>
@@ -245,7 +246,7 @@ export default function Settings() {
                      <h4 className={`font-semibold ${isDark ? "text-slate-200" : "text-gray-800"}`}>Danger Zone</h4>
                      <p className={`text-sm ${isDark ? "text-slate-400" : "text-gray-500"}`}>Permanently delete your account and all data</p>
                    </div>
-                   <button onClick={handleDeleteAccount} className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-lg shadow transition">
+                   <button onClick={() => { setDeleteAccountInput(""); setShowDeleteAccountModal(true); }} className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-lg shadow transition">
                      Delete Account
                    </button>
                  </div>
@@ -255,6 +256,69 @@ export default function Settings() {
           
         </motion.div>
       </div>
+
+      {/* Confirmation Modals */}
+      <AnimatePresence>
+        {/* Clear History Modal */}
+        {showClearHistoryModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowClearHistoryModal(false)} />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }} 
+              animate={{ scale: 1, opacity: 1, y: 0 }} 
+              exit={{ scale: 0.9, opacity: 0, y: 20 }} 
+              className={`${isDark ? "bg-slate-800 border-slate-700" : "bg-white border-gray-200"} p-8 md:p-10 rounded-2xl shadow-2xl z-10 w-full max-w-md border`}
+            >
+              <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span className="text-3xl">⚠️</span>
+              </div>
+              <h3 className={`text-2xl font-bold mb-3 text-center ${isDark ? "text-white" : "text-gray-900"}`}>Clear All History?</h3>
+              <p className={`mb-8 text-center text-sm ${isDark ? "text-slate-300" : "text-gray-600"}`}>
+                Are you absolutely sure you want to permanently delete all your expense history? Your account will remain, but all transactions will be gone. This action cannot be undone.
+              </p>
+              <div className="flex gap-4">
+                <button onClick={() => setShowClearHistoryModal(false)} className={`flex-1 px-4 py-3 rounded-xl font-bold transition shadow-sm ${isDark ? "bg-slate-700 hover:bg-slate-600 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}>Cancel</button>
+                <button onClick={executeClearHistory} className="flex-1 px-4 py-3 rounded-xl font-bold transition bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg shadow-yellow-500/30">Yes, Clear It</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {/* Delete Account Modal */}
+        {showDeleteAccountModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowDeleteAccountModal(false)} />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }} 
+              animate={{ scale: 1, opacity: 1, y: 0 }} 
+              exit={{ scale: 0.9, opacity: 0, y: 20 }} 
+              className={`${isDark ? "bg-slate-800 border-slate-700" : "bg-white border-gray-200"} p-8 md:p-10 rounded-2xl shadow-2xl z-10 w-full max-w-md border`}
+            >
+              <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span className="text-3xl">🛑</span>
+              </div>
+              <h3 className={`text-2xl font-bold mb-3 text-center ${isDark ? "text-white" : "text-gray-900"}`}>Delete Account</h3>
+              <p className={`mb-4 text-center text-sm ${isDark ? "text-slate-300" : "text-gray-600"}`}>
+                This action is irreversible. All your data, budgets, and settings will be permanently destroyed.
+              </p>
+              <p className={`mb-6 text-center text-sm font-semibold ${isDark ? "text-slate-200" : "text-gray-800"}`}>
+                Type <span className="text-red-500 font-mono bg-red-100 dark:bg-red-900/30 px-2 py-1 rounded">DELETE</span> below to confirm.
+              </p>
+              <input
+                type="text"
+                placeholder="DELETE"
+                value={deleteAccountInput}
+                onChange={(e) => setDeleteAccountInput(e.target.value)}
+                className={`w-full mb-8 px-4 py-3 border-2 rounded-xl font-bold text-center focus:outline-none focus:ring-2 focus:ring-red-500 transition shadow-sm ${isDark ? "bg-slate-900 border-slate-600 text-white" : "bg-gray-50 border-gray-300 text-gray-900"}`}
+              />
+              <div className="flex gap-4">
+                <button onClick={() => setShowDeleteAccountModal(false)} className={`flex-1 px-4 py-3 rounded-xl font-bold transition shadow-sm ${isDark ? "bg-slate-700 hover:bg-slate-600 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}>Cancel</button>
+                <button onClick={executeDeleteAccount} disabled={deleteAccountInput !== 'DELETE'} className="flex-1 px-4 py-3 rounded-xl font-bold transition bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/30 disabled:opacity-50 disabled:cursor-not-allowed">Delete Forever</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
