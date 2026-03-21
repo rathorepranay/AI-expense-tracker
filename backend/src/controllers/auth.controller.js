@@ -29,6 +29,14 @@ export const registerUser = async (req, res) => {
       });
     }
 
+    // Validation: password complexity
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters long, and include at least one number and one symbol",
+      });
+    }
+
     // Validation: phone format (if provided)
     if (phone && phone.trim() !== "") {
       const phoneRegex = /^\d{10,}$/;

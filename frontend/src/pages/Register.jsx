@@ -53,6 +53,12 @@ export default function Register() {
       return;
     }
 
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error("Password must be at least 8 characters, with 1 number and 1 symbol.");
+      return;
+    }
+
     if (phone && phone.trim() !== "") {
       const phoneRegex = /^\d{10,}$/;
       if (!phoneRegex.test(phone)) {
@@ -253,8 +259,11 @@ export default function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={handleKeyPress}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full mb-6 sm:mb-8 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
+                  className="w-full mb-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-white/90 backdrop-blur-sm transition text-sm sm:text-base"
                 />
+                <p className="text-white/80 text-xs mb-6 sm:mb-8 ml-1">
+                  * Must be at least 8 chars, 1 number, & 1 symbol
+                </p>
               </motion.div>
 
               {/* Register Button */}
