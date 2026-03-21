@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useDarkMode } from "../context/DarkModeContext";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -47,16 +48,10 @@ export default function Navbar() {
           transition={{ delay: 0.1 }}
           className="flex items-center gap-3"
         >
-          <motion.div
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="text-2xl"
-          >
-            💰
-          </motion.div>
+          <img src={logo} alt="SpendSmart" className="w-8 h-8 object-contain" />
           <div>
-            <h1 className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
-              ExpenseAI
+            <h1 className={`font-bold text-lg ${isDark ? "text-white" : "text-gray-900"}`}>
+              SpendSmart
             </h1>
             <p className={isDark ? "text-xs text-slate-400" : "text-xs text-gray-500"}>
               Smart spending tracker

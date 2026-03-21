@@ -88,67 +88,99 @@ export default function AddExpense({ onAdd }) {
         <h2 className="font-bold text-lg text-gray-800">Add Expense</h2>
       </div>
 
-      {/* Amount Input */}
-      <div className="mb-4">
-        <label className="text-sm font-semibold text-gray-700 mb-1 block">
-          Amount (₹)
-        </label>
-        <motion.input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter amount"
-          whileFocus={{ scale: 1.02 }}
-          className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
-        />
-      </div>
+      {/* 2x2 Grid Layout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 mb-4">
+        {/* Amount Input */}
+        <div>
+          <label className="text-sm font-semibold text-gray-700 mb-1 block">
+            Amount (₹)
+          </label>
+          <motion.input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount"
+            whileFocus={{ scale: 1.02 }}
+            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+          />
+        </div>
 
-      {/* Category Selector */}
-      <div className="mb-4 relative">
-        <label className="text-sm font-semibold text-gray-700 mb-1 block">
-          Category
-        </label>
-        <motion.button
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
-        >
-          <span>{category || "Select Category"}</span>
-          <motion.span
-            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
+        {/* Date Input */}
+        <div>
+          <label className="text-sm font-semibold text-gray-700 mb-1 block">
+            Date
+          </label>
+          <motion.input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            whileFocus={{ scale: 1.02 }}
+            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+          />
+        </div>
+
+        {/* Category Selector */}
+        <div className="relative">
+          <label className="text-sm font-semibold text-gray-700 mb-1 block">
+            Category
+          </label>
+          <motion.button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg bg-white/80 backdrop-blur-sm text-left flex items-center justify-between hover:bg-white/90 transition font-medium text-gray-700"
           >
-            ▼
-          </motion.span>
-        </motion.button>
-
-        {/* Dropdown Menu */}
-        <AnimatePresence>
-          {isDropdownOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-purple-300 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto"
+            <span>{category || "Select Category"}</span>
+            <motion.span
+              animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
             >
-              {categories.map((cat, idx) => (
-                <motion.button
-                  key={cat.key}
-                  onClick={() => handleCategorySelect(cat)}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  whileHover={{ backgroundColor: "#f3f4f6" }}
-                  className="w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition"
-                >
-                  <span className="text-2xl">{cat.emoji}</span>
-                  <span className="text-gray-800 font-medium">{cat.label}</span>
-                </motion.button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+              ▼
+            </motion.span>
+          </motion.button>
+
+          {/* Dropdown Menu */}
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-lg border-2 border-purple-300 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto"
+              >
+                {categories.map((cat, idx) => (
+                  <motion.button
+                    key={cat.key}
+                    onClick={() => handleCategorySelect(cat)}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    whileHover={{ backgroundColor: "#f3f4f6" }}
+                    className="w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition"
+                  >
+                    <span className="text-2xl">{cat.emoji}</span>
+                    <span className="text-gray-800 font-medium">{cat.label}</span>
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Note Input */}
+        <div>
+          <label className="text-sm font-semibold text-gray-700 mb-1 block">
+            Note (Optional)
+          </label>
+          <motion.input
+            type="text"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Add a brief note..."
+            whileFocus={{ scale: 1.02 }}
+            className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
+          />
+        </div>
       </div>
 
       {/* Quick Category Buttons */}
@@ -158,7 +190,7 @@ export default function AddExpense({ onAdd }) {
           animate={{ opacity: 1, height: "auto" }}
           className="mb-4"
         >
-          <p className="text-xs text-gray-600 mb-2">Quick Select</p>
+          <p className="text-xs text-gray-600 mb-2 font-medium">Quick Select Recent Used:</p>
           <div className="flex flex-wrap gap-2">
             {quickCategories.map((cat) => (
               <motion.button
@@ -166,7 +198,7 @@ export default function AddExpense({ onAdd }) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleCategorySelect(cat)}
-                className="px-3 py-1 bg-white/70 rounded-full text-sm font-medium text-gray-700 border border-purple-300 hover:bg-purple-100 transition"
+                className="px-3 py-1 bg-white/70 rounded-full text-sm font-medium text-gray-700 border border-purple-300 hover:bg-purple-100 shadow-sm transition"
               >
                 {cat.emoji} {cat.label}
               </motion.button>
@@ -174,35 +206,6 @@ export default function AddExpense({ onAdd }) {
           </div>
         </motion.div>
       )}
-
-      {/* Date Input */}
-      <div className="mb-4">
-        <label className="text-sm font-semibold text-gray-700 mb-1 block">
-          Date
-        </label>
-        <motion.input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          whileFocus={{ scale: 1.02 }}
-          className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition"
-        />
-      </div>
-
-      {/* Note Input */}
-      <div className="mb-4">
-        <label className="text-sm font-semibold text-gray-700 mb-1 block">
-          Note (Optional)
-        </label>
-        <motion.textarea
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          placeholder="Add a note..."
-          whileFocus={{ scale: 1.02 }}
-          className="w-full px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white/80 backdrop-blur-sm transition resize-none"
-          rows="2"
-        />
-      </div>
 
       {/* Submit Button */}
       <motion.button

@@ -55,11 +55,12 @@ export default function Dashboard() {
       if (res.ok) {
         setExpenses(data);
 
-        // Check if goal just achieved
-        if (isGoalAchieved(data) && !goalJustAchieved) {
+        // Only celebrate budget achievement at the end of the week (Saturday)
+        const isEndOfWeek = new Date().getDay() === 6; // 0=Sun, 6=Sat
+        if (isGoalAchieved(data) && !goalJustAchieved && isEndOfWeek) {
           setGoalJustAchieved(true);
           triggerConfetti();
-          toast.success("🎉 You achieved your weekly budget goal! 👑");
+          toast.success("🎉 You survived the week under budget! 👑");
         }
       } else toast.error(data.message);
     } catch {

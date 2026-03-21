@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaChartLine, FaWallet, FaCog, FaQuestionCircle } from "react-icons/fa";
 import { useDarkMode } from "../context/DarkModeContext";
+import logo from "../assets/logo.png";
 
 const NavItem = ({ icon: Icon, label, isActive = false, onClick, isDark }) => {
   return (
@@ -32,8 +34,12 @@ const NavItem = ({ icon: Icon, label, isActive = false, onClick, isDark }) => {
 
 export default function Sidebar() {
   const { isDark } = useDarkMode();
-  const [activeNav, setActiveNav] = useState("dashboard");
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Derive activeNav directly from the URL pathname (e.g. "/analytics" -> "analytics")
+  const activeNav = location.pathname.substring(1) || "dashboard";
 
   const navItems = [
     { id: "dashboard", icon: FaWallet, label: "Dashboard" },
@@ -64,16 +70,10 @@ export default function Sidebar() {
               animate={{ opacity: 1 }}
               className="flex items-center gap-2"
             >
-              <motion.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="text-2xl"
-              >
-                💰
-              </motion.div>
+              <img src={logo} alt="SpendSmart Logo" className="w-8 h-8 object-contain" />
               <div>
-                <h1 className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
-                  ExpenseAI
+                <h1 className={`font-bold text-lg ${isDark ? "text-white" : "text-gray-900"}`}>
+                  SpendSmart
                 </h1>
                 <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-500"}`}>
                   Tracker
@@ -120,7 +120,7 @@ export default function Sidebar() {
               icon={item.icon}
               label={isCollapsed ? "" : item.label}
               isActive={activeNav === item.id}
-              onClick={() => setActiveNav(item.id)}
+              onClick={() => navigate(`/${item.id}`)}
               isDark={isDark}
             />
           </motion.div>
@@ -149,7 +149,8 @@ export default function Sidebar() {
         <NavItem
           icon={FaCog}
           label={isCollapsed ? "" : "Settings"}
-          onClick={() => {}}
+          onClick={() => navigate('/settings')}
+          isActive={activeNav === "settings"}
           isDark={isDark}
         />
         <NavItem

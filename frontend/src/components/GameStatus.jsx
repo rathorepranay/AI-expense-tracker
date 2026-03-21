@@ -1,17 +1,19 @@
 import { motion } from "framer-motion";
+import { useDarkMode } from "../context/DarkModeContext";
 import {
   calculateStreak,
   getWeeklyProgress,
   isGoalAchieved,
   getAchievements,
-  WEEKLY_BUDGET,
+  getWeeklyBudget,
 } from "../utils/gamification";
 import { staggerContainer, staggerItem, pulseScale } from "../utils/animations";
 
 export default function GameStatus({ expenses = [] }) {
+  const { isDark } = useDarkMode();
   const streak = calculateStreak(expenses);
-  const progress = getWeeklyProgress(expenses, WEEKLY_BUDGET);
-  const goalAchieved = isGoalAchieved(expenses, WEEKLY_BUDGET);
+  const progress = getWeeklyProgress(expenses, getWeeklyBudget());
+  const goalAchieved = isGoalAchieved(expenses, getWeeklyBudget());
   const achievements = getAchievements(expenses);
 
   // Determine progress color
@@ -37,7 +39,11 @@ export default function GameStatus({ expenses = [] }) {
       {/* Streak Card */}
       <motion.div
         variants={staggerItem}
-        className="bg-gradient-to-br from-orange-100 to-red-100 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-orange-200/50 relative overflow-hidden"
+        className={`${
+          isDark
+            ? "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600"
+            : "bg-gradient-to-br from-orange-100 to-red-100 border-orange-200/50"
+        } backdrop-blur-lg p-6 rounded-2xl shadow-lg border relative overflow-hidden`}
       >
         {streak > 0 && (
           <motion.div
@@ -49,17 +55,17 @@ export default function GameStatus({ expenses = [] }) {
           </motion.div>
         )}
         <div className="relative z-10">
-          <p className="text-gray-700 text-sm font-semibold mb-2">
+          <p className={`${isDark ? "text-slate-300" : "text-gray-700"} text-sm font-semibold mb-2`}>
             Tracking Streak
           </p>
           <motion.h3
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
-            className="text-4xl font-bold text-orange-600"
+            className={`text-4xl font-bold ${isDark ? "text-orange-400" : "text-orange-600"}`}
           >
             {streak}
           </motion.h3>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-600"} mt-1`}>
             {streak === 0
               ? "Start tracking today! 💪"
               : streak === 1
@@ -72,9 +78,13 @@ export default function GameStatus({ expenses = [] }) {
       {/* Weekly Budget Card */}
       <motion.div
         variants={staggerItem}
-        className="bg-gradient-to-br from-blue-100 to-purple-100 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-blue-200/50"
+        className={`${
+          isDark
+            ? "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600"
+            : "bg-gradient-to-br from-blue-100 to-purple-100 border-blue-200/50"
+        } backdrop-blur-lg p-6 rounded-2xl shadow-lg border`}
       >
-        <p className="text-gray-700 text-sm font-semibold mb-4">
+        <p className={`${isDark ? "text-slate-300" : "text-gray-700"} text-sm font-semibold mb-4`}>
           Weekly Budget
         </p>
 
@@ -87,7 +97,7 @@ export default function GameStatus({ expenses = [] }) {
               cy="50"
               r="45"
               fill="none"
-              stroke="#e5e7eb"
+              stroke={isDark ? "#475569" : "#e5e7eb"}
               strokeWidth="8"
             />
             {/* Progress circle */}
@@ -126,12 +136,12 @@ export default function GameStatus({ expenses = [] }) {
             <span className={`text-2xl font-bold ${getProgressText()}`}>
               {Math.round(progress)}%
             </span>
-            <span className="text-xs text-gray-600">of budget</span>
+            <span className={`text-xs ${isDark ? "text-slate-400" : "text-gray-600"}`}>of budget</span>
           </div>
         </div>
 
-        <p className="text-xs text-center text-gray-600">
-          Target: ₹{WEEKLY_BUDGET.toLocaleString("en-IN")}
+        <p className={`text-xs text-center ${isDark ? "text-slate-400" : "text-gray-600"}`}>
+          Target: ₹{getWeeklyBudget().toLocaleString("en-IN")}
         </p>
 
         {goalAchieved && (
@@ -149,9 +159,13 @@ export default function GameStatus({ expenses = [] }) {
       {/* Achievements Card */}
       <motion.div
         variants={staggerItem}
-        className="bg-gradient-to-br from-yellow-100 to-pink-100 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-yellow-200/50"
+        className={`${
+          isDark
+            ? "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600"
+            : "bg-gradient-to-br from-yellow-100 to-pink-100 border-yellow-200/50"
+        } backdrop-blur-lg p-6 rounded-2xl shadow-lg border`}
       >
-        <p className="text-gray-700 text-sm font-semibold mb-3">Achievements</p>
+        <p className={`${isDark ? "text-slate-300" : "text-gray-700"} text-sm font-semibold mb-3`}>Achievements</p>
 
         {achievements.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -161,7 +175,11 @@ export default function GameStatus({ expenses = [] }) {
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-md border-2 border-yellow-300 hover:scale-110 transition"
+                className={`flex items-center justify-center w-12 h-12 rounded-full shadow-md border-2 ${
+                  isDark
+                    ? "bg-slate-600 border-amber-400 hover:bg-slate-500"
+                    : "bg-white border-yellow-300 hover:scale-110"
+                } transition`}
                 title={achievement.title}
               >
                 <span className="text-xl">{achievement.icon}</span>
@@ -169,13 +187,13 @@ export default function GameStatus({ expenses = [] }) {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-gray-600">
+          <p className={`text-sm ${isDark ? "text-slate-400" : "text-gray-600"}`}>
             🎯 Unlock achievements by tracking expenses!
           </p>
         )}
 
         {achievements.length > 3 && (
-          <p className="text-xs text-gray-600 mt-2">
+          <p className={`text-xs ${isDark ? "text-slate-400" : "text-gray-600"} mt-2`}>
             +{achievements.length - 3} more achievements
           </p>
         )}

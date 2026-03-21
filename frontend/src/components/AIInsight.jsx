@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { getSpendingTip, getWeeklyTotal, WEEKLY_BUDGET } from "../utils/gamification";
+import { getSpendingTip, getWeeklyTotal, getWeeklyBudget } from "../utils/gamification";
 import { staggerItem } from "../utils/animations";
 
 export default function AIInsight({ expenses = [] }) {
   const tip = getSpendingTip(expenses);
   const weeklyTotal = getWeeklyTotal(expenses);
-  const remaining = Math.max(WEEKLY_BUDGET - weeklyTotal, 0);
-  const percentageLeft = (remaining / WEEKLY_BUDGET) * 100;
+  const remaining = Math.max(getWeeklyBudget() - weeklyTotal, 0);
+  const percentageLeft = (remaining / getWeeklyBudget()) * 100;
 
   return (
     <motion.div
@@ -66,7 +66,7 @@ export default function AIInsight({ expenses = [] }) {
 
             <p className="text-xs text-gray-600 mt-1">
               {percentageLeft > 0
-                ? `You can still spend ₹${(WEEKLY_BUDGET * (percentageLeft / 100)).toFixed(0)} this week`
+                ? `You can still spend ₹${(getWeeklyBudget() * (percentageLeft / 100)).toFixed(0)} this week`
                 : "Weekly budget exceeded! 📊"}
             </p>
           </div>

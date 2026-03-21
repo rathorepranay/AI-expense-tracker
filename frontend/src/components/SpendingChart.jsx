@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useDarkMode } from "../context/DarkModeContext";
 import {
   getDailySpendingTrend,
   getCategoryStats,
@@ -19,6 +20,7 @@ import {
 import { getCategoryColor } from "../utils/categoryIcons";
 
 export default function SpendingChart({ expenses = [] }) {
+  const { isDark } = useDarkMode();
   if (!expenses || expenses.length === 0) {
     return (
       <motion.div

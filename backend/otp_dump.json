@@ -1,0 +1,18 @@
+[
+  {
+    "id": 10,
+    "email": "rathorepranay61@gmail.com",
+    "otp_code": "552347",
+    "created_at": "2026-03-20T13:28:08.000Z",
+    "expires_at": "2026-03-20T13:38:08.000Z",
+    "is_used": 1
+  },
+  {
+    "id": 9,
+    "email": "vamppml2122@gmail.com",
+    "otp_code": "526845",
+    "created_at": "2026-03-20T13:24:45.000Z",
+    "expires_at": "2026-03-20T13:34:45.000Z",
+    "is_used": 1
+  }
+]

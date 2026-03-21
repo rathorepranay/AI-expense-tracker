@@ -1,6 +1,9 @@
 // Gamification logic for streaks, achievements, and insights
 
-export const WEEKLY_BUDGET = 10000; // Default weekly budget in INR
+export const getWeeklyBudget = () => {
+  const saved = localStorage.getItem("weeklyBudget");
+  return saved ? Number(saved) : 10000;
+};
 
 export const calculateStreak = (expenses) => {
   if (!expenses || expenses.length === 0) return 0;
@@ -59,12 +62,12 @@ export const getWeeklyTotal = (expenses) => {
     .reduce((sum, exp) => sum + Number(exp.amount), 0);
 };
 
-export const getWeeklyProgress = (expenses, budget = WEEKLY_BUDGET) => {
+export const getWeeklyProgress = (expenses, budget = getWeeklyBudget()) => {
   const weeklyTotal = getWeeklyTotal(expenses);
   return Math.min((weeklyTotal / budget) * 100, 100);
 };
 
-export const isGoalAchieved = (expenses, budget = WEEKLY_BUDGET) => {
+export const isGoalAchieved = (expenses, budget = getWeeklyBudget()) => {
   const weeklyTotal = getWeeklyTotal(expenses);
   return weeklyTotal <= budget;
 };
@@ -160,7 +163,7 @@ export const getSpendingTip = (expenses, dailyAverage = null) => {
     };
   }
 
-  if (weeklyTotal > WEEKLY_BUDGET * 0.8) {
+  if (weeklyTotal > getWeeklyBudget() * 0.8) {
     return {
       text: "⚠️ Watch out! You're close to your budget limit.",
       color: "text-amber-600",

@@ -73,12 +73,11 @@ export const registerUser = async (req, res) => {
 
     // Generate OTP
     const otp = generateOTP();
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    // Store OTP in database
+    // Store OTP in database (expiration 10 minutes from now using MySQL timezone)
     await db.query(
-      "INSERT INTO otp_codes (email, otp_code, expires_at) VALUES (?, ?, ?)",
-      [email, otp, expiresAt]
+      "INSERT INTO otp_codes (email, otp_code, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))",
+      [email, otp]
     );
 
     // Send OTP via email
@@ -119,26 +118,19 @@ export const verifyOTP = async (req, res) => {
       });
     }
 
-    // Check if OTP exists and is valid
+    // Check if OTP exists and is valid and not expired
     const [otpRecords] = await db.query(
-      "SELECT * FROM otp_codes WHERE email = ? AND otp_code = ? AND is_used = 0",
+      "SELECT * FROM otp_codes WHERE email = ? AND otp_code = ? AND is_used = 0 AND expires_at > NOW()",
       [email, otp_code]
     );
 
     if (otpRecords.length === 0) {
       return res.status(400).json({
-        message: "Invalid OTP code",
+        message: "Invalid or expired OTP code",
       });
     }
 
     const otpRecord = otpRecords[0];
-
-    // Check if OTP has expired
-    if (new Date() > new Date(otpRecord.expires_at)) {
-      return res.status(400).json({
-        message: "OTP expired. Please register again.",
-      });
-    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -167,7 +159,9 @@ export const verifyOTP = async (req, res) => {
     });
   } catch (error) {
     console.error("OTP verification error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ 
+      message: error.sqlMessage || error.message || "Internal Server Error" 
+    });
   }
 };
 

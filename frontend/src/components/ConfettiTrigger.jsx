@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import Confetti from "react-confetti";
+import { createRoot } from "react-dom/client";
 
 export const useConfetti = () => {
   const triggerConfetti = useCallback(() => {
@@ -9,7 +10,7 @@ export const useConfetti = () => {
     document.body.appendChild(container);
 
     // Use createRoot to render confetti
-    const root = document.createRoot(container);
+    const root = createRoot(container);
 
     // Render confetti
     root.render(

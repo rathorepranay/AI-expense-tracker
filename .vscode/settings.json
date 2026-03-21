@@ -15,5 +15,6 @@
             "username": "root",
             "askForPassword": true
         }
-    ]
+    ],
+    "CodeGPT.apiKey": "OpenAI"
 }
