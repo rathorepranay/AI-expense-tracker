@@ -110,3 +110,17 @@ export const deleteExpense = async (req, res) => {
     });
   }
 };
+
+export const clearAllExpenses = async (req, res) => {
+  try {
+    const userID = req.userID;
+    await db.query("DELETE FROM expenses WHERE user_id = ?", [userID]);
+    return res.status(200).json({
+      message: "All expenses deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};

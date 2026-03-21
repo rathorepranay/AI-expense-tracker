@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
+import Goals from "./pages/Goals";
 import Settings from "./pages/Settings";
 import EditExpense from "./pages/EditExpense";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -30,6 +31,15 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Analytics />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/goals"
+            element={
+              <ProtectedRoute>
+                <Goals />
               </ProtectedRoute>
             }
           />

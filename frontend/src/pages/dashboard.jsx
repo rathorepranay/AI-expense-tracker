@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import BottomNav from "../components/BottomNav";
 import AddExpense from "../components/AddExpenses";
 import EditModal from "../components/EditModal";
 import GameStatus from "../components/GameStatus";
@@ -90,6 +91,7 @@ export default function Dashboard() {
   return (
     <div className={`flex h-screen ${isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" : "bg-gradient-to-br from-emerald-200 via-teal-100 to-blue-200"} overflow-hidden`}>
       <Sidebar />
+      <BottomNav />
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
@@ -98,7 +100,7 @@ export default function Dashboard() {
           variants={pageTransition}
           initial="initial"
           animate="animate"
-          className="flex-1 overflow-y-auto p-6 space-y-6"
+          className="flex-1 overflow-y-auto p-4 md:p-6 pb-24 md:pb-6 space-y-6"
         >
           {/* Header */}
           <motion.div variants={staggerItem}>

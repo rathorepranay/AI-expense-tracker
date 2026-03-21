@@ -223,3 +223,15 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const userID = req.userID;
+    await db.query("DELETE FROM expenses WHERE user_id = ?", [userID]);
+    await db.query("DELETE FROM users WHERE id = ?", [userID]);
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Delete account error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

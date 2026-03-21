@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FaChartLine, FaWallet, FaCog, FaQuestionCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaChartLine, FaWallet, FaCog, FaInfoCircle, FaBullseye } from "react-icons/fa";
 import { useDarkMode } from "../context/DarkModeContext";
 import logo from "../assets/logo.png";
 
@@ -37,6 +37,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   // Derive activeNav directly from the URL pathname (e.g. "/analytics" -> "analytics")
   const activeNav = location.pathname.substring(1) || "dashboard";
@@ -44,9 +45,11 @@ export default function Sidebar() {
   const navItems = [
     { id: "dashboard", icon: FaWallet, label: "Dashboard" },
     { id: "analytics", icon: FaChartLine, label: "Analytics" },
+    { id: "goals", icon: FaBullseye, label: "Goals" },
   ];
 
   return (
+    <>
     <motion.aside
       animate={{ width: isCollapsed ? 80 : 256 }}
       transition={{ duration: 0.3 }}
@@ -54,7 +57,7 @@ export default function Sidebar() {
         isDark
           ? "bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-slate-700"
           : "bg-gradient-to-b from-white via-emerald-50 to-teal-50 border-emerald-200/30"
-      } backdrop-blur-xl border-r shadow-lg overflow-hidden flex flex-col`}
+      } backdrop-blur-xl border-r shadow-lg overflow-hidden hidden md:flex flex-col`}
     >
       {/* Header */}
       <motion.div
@@ -154,9 +157,9 @@ export default function Sidebar() {
           isDark={isDark}
         />
         <NavItem
-          icon={FaQuestionCircle}
-          label={isCollapsed ? "" : "Help"}
-          onClick={() => {}}
+          icon={FaInfoCircle}
+          label={isCollapsed ? "" : "About"}
+          onClick={() => setIsAboutOpen(true)}
           isDark={isDark}
         />
 
@@ -181,5 +184,34 @@ export default function Sidebar() {
         )}
       </motion.div>
     </motion.aside>
+
+      <AnimatePresence>
+        {isAboutOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className={`w-full max-w-sm p-6 rounded-2xl shadow-2xl ${isDark ? 'bg-slate-800 border border-slate-700 text-white' : 'bg-white text-gray-800'}`}
+            >
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <FaInfoCircle className="text-emerald-500" /> About
+              </h2>
+              <div className={`space-y-3 ${isDark ? 'text-slate-300' : 'text-gray-600'}`}>
+                <p><strong className={isDark ? "text-white" : "text-gray-900"}>Developed By:</strong> Pranay Rathore</p>
+                <p><strong className={isDark ? "text-white" : "text-gray-900"}>Email:</strong> rathorepranay61@gmail.com</p>
+                <p><strong className={isDark ? "text-white" : "text-gray-900"}>GitHub:</strong> <a href="https://github.com/rathorepranay" target="_blank" rel="noreferrer" className="text-emerald-500 hover:text-emerald-400 font-medium hover:underline">rathorepranay</a></p>
+              </div>
+              <button
+                onClick={() => setIsAboutOpen(false)}
+                className="mt-6 w-full py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg font-semibold transition shadow"
+              >
+                Awesome!
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

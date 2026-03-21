@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
 import expenseRoutes from "./routes/expense.route.js";
+import goalRoutes from "./routes/goal.route.js";
 import cors from "cors";
 const app = express();
 app.use(express.json());
@@ -12,4 +13,5 @@ app.use(
 );
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/goals", goalRoutes);
 export default app;

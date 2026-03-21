@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import BottomNav from "../components/BottomNav";
 import { SkeletonCard } from "../components/SkeletonLoader";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -62,6 +63,7 @@ export default function Analytics() {
       } overflow-hidden`}
     >
       <Sidebar />
+      <BottomNav />
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
@@ -70,7 +72,7 @@ export default function Analytics() {
           variants={pageTransition}
           initial="initial"
           animate="animate"
-          className="flex-1 overflow-y-auto p-6 space-y-6"
+          className="flex-1 overflow-y-auto p-4 md:p-6 pb-24 md:pb-6 space-y-6"
         >
           {/* Header */}
           <motion.div variants={staggerItem}>
